@@ -14,24 +14,18 @@ export default function App() {
 
   const canGenerate = useMemo(() => inputText.trim().length > 0, [inputText])
 
-  function handleGenerate() {
-    // Demo logic (swap this out for a real API call later)
-    let result = inputText
+  async function handleGenerate() {
+    const res = await fetch("/api/interpret", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        text: inputText,
+        options,
+      }),
+    })
 
-    if (options.simplify) {
-      result = result.replace(/utilize/gi, 'use')
-      result = result.replace(/demonstrate/gi, 'show')
-    }
-
-    if (options.soften) {
-      result = `Consider the following suggestion:\n\n${result}`
-    }
-
-    if (options.caseSupport) {
-      result += `\n\n• You may want to include a specific example to support this point.`
-    }
-
-    setOutputText(result || '(No input provided)')
+    const data = await res.json()
+    setOutputText(data.output || data.detail || "")
   }
 
   function handleClear() {
