@@ -1,0 +1,75 @@
+.card {
+  border: 1px solid #e6e6e6;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.heading {
+  margin: 0 0 12px 0;
+  font-size: 18px;
+}
+
+.label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.textarea {
+  width: 100%;
+  min-height: 180px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #d7d7d7;
+  font-size: 14px;
+  resize: vertical;
+  color: #111111;
+  background: #ffffff;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.primary {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #111;
+  background: #111;
+  color: #fff;
+  cursor: pointer;
+}
+
+.primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.secondary {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #d7d7d7;
+  background: #fff;
+  cursor: pointer;
+}
+
+.hint {
+  margin: 12px 0 0 0;
+  font-size: 13px;
+  opacity: 0.75;
+}

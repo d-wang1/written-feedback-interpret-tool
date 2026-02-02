@@ -1,4 +1,7 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
+import FeedbackForm from './components/FeedbackForm'
+import OutputPanel from './components/OutputPanel'
+import styles from './App.module.css'
 
 export default function App() {
   const [inputText, setInputText] = useState('')
@@ -9,19 +12,15 @@ export default function App() {
     caseSupport: false,
   })
 
-  function handleOptionChange(e) {
-    const { name, checked } = e.target
-    setOptions(prev => ({ ...prev, [name]: checked }))
-  }
+  const canGenerate = useMemo(() => inputText.trim().length > 0, [inputText])
 
   function handleGenerate() {
-    // setOutputText('Hello! Generate works.')
-    console.log('Generate clicked', inputText, options, " at \n", new Date().toString())
+    // Demo logic (swap this out for a real API call later)
     let result = inputText
 
     if (options.simplify) {
-      result = result.replace(/utilize/g, 'use')
-      result = result.replace(/demonstrate/g, 'show')
+      result = result.replace(/utilize/gi, 'use')
+      result = result.replace(/demonstrate/gi, 'show')
     }
 
     if (options.soften) {
@@ -35,97 +34,36 @@ export default function App() {
     setOutputText(result || '(No input provided)')
   }
 
+  function handleClear() {
+    setInputText('')
+    setOutputText('')
+    setOptions({ simplify: false, soften: false, caseSupport: false })
+  }
+
   return (
-    <div style={styles.container}>
-      <h1>Written Feedback Interpretation Tool</h1>
+    <div className={styles.page}>
+      <div className={styles.container}>
+        <header className={styles.header}>
+          <h1 className={styles.title}>Written Feedback Interpretation Tool</h1>
+          <p className={styles.subtitle}>
+            Demo: paste feedback, choose options, and generate an improved version.
+          </p>
+        </header>
 
-      <label style={styles.label}>Paste feedback</label>
-      <textarea
-        style={styles.textarea}
-        value={inputText}
-        onChange={e => setInputText(e.target.value)}
-        placeholder="Paste written feedback here..."
-      />
-
-      <div style={styles.options}>
-        <label>
-          <input
-            type="checkbox"
-            name="simplify"
-            checked={options.simplify}
-            onChange={handleOptionChange}
+        <div className={styles.grid}>
+          <FeedbackForm
+            inputText={inputText}
+            onInputChange={setInputText}
+            options={options}
+            onOptionsChange={setOptions}
+            onGenerate={handleGenerate}
+            onClear={handleClear}
+            canGenerate={canGenerate}
           />
-          Simplify language
-        </label>
 
-        <label>
-          <input
-            type="checkbox"
-            name="soften"
-            checked={options.soften}
-            onChange={handleOptionChange}
-          />
-          Soften tone
-        </label>
-
-        <label>
-          <input
-            type="checkbox"
-            name="caseSupport"
-            checked={options.caseSupport}
-            onChange={handleOptionChange}
-          />
-          Add case support
-        </label>
+          <OutputPanel outputText={outputText} />
+        </div>
       </div>
-
-      <button style={styles.button} onClick={handleGenerate}>
-        Generate
-      </button>
-
-      <label style={styles.label}>Output</label>
-      <textarea
-        style={{
-          ...styles.textarea,
-          backgroundColor: '#f7f7f7',
-          color: '#111',
-          WebkitTextFillColor: '#111',
-        }}
-        value={outputText}
-        readOnly
-      />
     </div>
   )
-}
-
-const styles = {
-  container: {
-    maxWidth: '800px',
-    margin: '40px auto',
-    padding: '20px',
-    fontFamily: 'sans-serif',
-  },
-  label: {
-    fontWeight: 'bold',
-    display: 'block',
-    marginBottom: '8px',
-  },
-  textarea: {
-    width: '100%',
-    minHeight: '140px',
-    padding: '10px',
-    marginBottom: '20px',
-    fontSize: '14px',
-  },
-  options: {
-    display: 'flex',
-    gap: '20px',
-    marginBottom: '20px',
-  },
-  button: {
-    padding: '10px 16px',
-    fontSize: '16px',
-    cursor: 'pointer',
-    marginBottom: '20px',
-  },
 }
