@@ -14,7 +14,7 @@ The LLM provider can be easily exchanged in `server/app/main.py` based on need a
 3. Create an `.env` file at the repo root (`written-feedback-interpret-tool/.env`) for your Groq API key. 
    1. To get a free API key, go to https://console.groq.com/home. 
    2. Copy the API key so that your `.env` file has: `GROQ_API_KEY=<your api key>`
-   3. _Do NOT upload or share your key. Verify that `.gitignore` does contain `.env` and `.env.*`_
+   3. You may also use the `.env` file for modifying configurations, e.g. prompt profiles. Reference the `env Template` file for options.
 4. Build and run the local server via `docker compose up --build`. 
    1. Visit http://localhost:5173/ on your browser.
    2. Verify server health via http://localhost:8000/api/health
@@ -31,5 +31,5 @@ The LLM provider can be easily exchanged in `server/app/main.py` based on need a
 1. Quota Exceeded
    Check the LLM dashboard (e.g. https://console.groq.com/dashboard/metrics) for usage details. Wait a few minutes / day to try again. Try not to repeatedly click the submit button.
 
-2. Change in Python dependencies
-   If dependencies ever change, rebuild using `docker compose build --no-cache` then `docker compose up`.
+2. Change in Python dependencies / renaming files
+   If dependencies or file names ever change, rebuild using `docker compose build --no-cache` then `docker compose up`.

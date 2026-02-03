@@ -3,6 +3,8 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from dotenv import load_dotenv
 from groq import Groq
+from app.prompt_cfg import prompt_store, build_system_prompt, build_user_prompt
+from app.model_cfg import model_config_store
 
 load_dotenv()
 
@@ -33,27 +35,6 @@ class InterpretResponse(BaseModel):
     output: str
 
 
-def build_system_prompt(options: dict) -> str:
-    goals = []
-    if options.get("simplify"):
-        goals.append("Simplify the language while preserving meaning.")
-    if options.get("soften"):
-        goals.append("Soften the tone to be constructive and supportive.")
-    if options.get("caseSupport"):
-        goals.append("Add brief case support: 2–4 bullet points suggesting concrete examples/evidence.")
-
-    goals_text = "\n".join(f"- {g}" for g in goals) or "- Return the original feedback unchanged."
-
-    return f"""
-You are assisting professors and teaching assistants in rewriting written feedback.
-
-Goals:
-{goals_text}
-
-Return ONLY the rewritten feedback text. Do not add explanations.
-""".strip()
-
-
 @app.get("/api/health")
 def health():
     return {"ok": True}
@@ -64,23 +45,40 @@ def interpret(req: InterpretRequest):
     if not req.text.strip():
         raise HTTPException(status_code=400, detail="Input text is empty")
 
-    system_prompt = build_system_prompt(req.options)
-
     try:
-        # Groq chat completions (OpenAI-compatible)
-        client = get_client()
-        resp = client.chat.completions.create(
-            model="llama-3.1-8b-instant",
+        # ----- Load prompt configuration -----
+        prompt_cfg = prompt_store.load()
+        system_prompt = build_system_prompt(prompt_cfg)
+        user_prompt = build_user_prompt(req.text, req.options, prompt_cfg)
+
+        # ----- Load model configuration -----
+        model_cfg = model_config_store.load()
+        generation = model_cfg.get("generation", {})
+
+        model_name = model_cfg.get("model")
+        temperature = generation.get("temperature", 0.2)
+        top_p = generation.get("top_p", 1.0)
+        max_tokens = generation.get("max_tokens", 512)
+        stop = model_cfg.get("stop_sequences") or None
+
+        # ----- Call Groq -----
+        resp = get_client().chat.completions.create(
+            model=model_name,
             messages=[
                 {"role": "system", "content": system_prompt},
-                {"role": "user", "content": req.text},
+                {"role": "user", "content": user_prompt},
             ],
-            temperature=0.2,
+            temperature=temperature,
+            top_p=top_p,
+            max_tokens=max_tokens,
+            stop=stop,
         )
+
         output = resp.choices[0].message.content or ""
         return InterpretResponse(output=output)
 
+    except HTTPException:
+        raise
     except Exception as e:
-        # Surface a useful error message in logs
-        print("Groq error:", repr(e))
-        raise HTTPException(status_code=500, detail="Groq request failed")
+        print("interpret() error:", repr(e))
+        raise HTTPException(status_code=500, detail="LLM request failed")

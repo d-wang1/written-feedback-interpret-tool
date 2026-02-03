@@ -1,0 +1,4 @@
+PROMPT_PROFILE=default
+MODEL_PROFILE=default
+# MODEL_CONFIG_FILE=/app/server/app/model_config.yaml
+GROQ_API_KEY=12345
