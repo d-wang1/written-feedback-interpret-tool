@@ -8,6 +8,7 @@ export default function FeedbackForm({
   onGenerate,
   onClear,
   canGenerate,
+  isLoading
 }) {
   function handleOptionChange(e) {
     const { name, checked } = e.target
@@ -57,7 +58,7 @@ export default function FeedbackForm({
       </div>
 
       <div className={styles.actions}>
-        <button className={styles.primary} onClick={onGenerate} disabled={!canGenerate}>
+        <button className={styles.primary} onClick={onGenerate} disabled={!canGenerate || isLoading}>
           Generate
         </button>
         <button className={styles.secondary} onClick={onClear}>

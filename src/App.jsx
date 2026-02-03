@@ -6,6 +6,7 @@ import styles from './App.module.css'
 export default function App() {
   const [inputText, setInputText] = useState('')
   const [outputText, setOutputText] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
   const [options, setOptions] = useState({
     simplify: false,
     soften: false,
@@ -15,6 +16,7 @@ export default function App() {
   const canGenerate = useMemo(() => inputText.trim().length > 0, [inputText])
 
   async function handleGenerate() {
+    setIsLoading(true)
     const res = await fetch("/api/interpret", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -25,6 +27,7 @@ export default function App() {
     })
 
     const data = await res.json()
+    setIsLoading(false)
     setOutputText(data.output || data.detail || "")
   }
 
@@ -53,6 +56,7 @@ export default function App() {
             onGenerate={handleGenerate}
             onClear={handleClear}
             canGenerate={canGenerate}
+            isLoading = {isLoading}
           />
 
           <OutputPanel outputText={outputText} />
