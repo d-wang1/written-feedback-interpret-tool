@@ -13,10 +13,10 @@ default:
       Rewrite the feedback according to the selected goals.
 
     simplify: |
-      Simplify the language while preserving meaning. Prefer clear, plain wording.
+      Simplify the language while preserving meaning. Avoid complex vocabulary and prefer clear, plain wording.
 
     soften: |
-      Soften the tone to be constructive and supportive. Avoid harsh wording.
+      Soften the tone to be constructive and supportive. Prefer positive phrasing and avoid harsh wording.
 
     caseSupport: |
       Add brief case support: 2–4 bullet points suggesting concrete examples or evidence.

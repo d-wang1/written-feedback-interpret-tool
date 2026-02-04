@@ -21,11 +21,12 @@ The LLM provider can be easily exchanged in `server/app/main.py` based on need a
 
 
 # *(Dev)* TODOs:
-- Add repeat-click limit for website to avoid exceeding free quota
-  - Disable duplicate requests while loading
+- Implement Figma template (in addition?) as a separate page
+- User profile login system
+  - DB to store user info
+- Add repeat-click limit (per time frame) for website to avoid exceeding free quota
 - Add configurable model choice
-- Add configurable prompt
-- Test out prompts w/ Postman
+- Implement prompt evaluation / testing pipeline for prompt engineering
 
 # Common Issues:
 1. Quota Exceeded
