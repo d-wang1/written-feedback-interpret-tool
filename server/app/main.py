@@ -7,7 +7,13 @@ from dotenv import load_dotenv
 from groq import Groq
 from app.prompt_cfg import prompt_store, build_system_prompt, build_user_prompt
 from app.model_cfg import model_config_store
-from app.mongodb import connect_db, disconnect_db, ensure_collections
+from app.mongodb import (
+    connect_db,
+    disconnect_db,
+    ensure_collections,
+    test_items_collection,
+    test2_collection,
+)
 from bson import ObjectId
 
 load_dotenv()
@@ -77,6 +83,25 @@ async def create_test_item(item: TestItem):
         "created_at": created_item["created_at"].isoformat()
     }
 
+@app.post("/api/test2")
+async def create_test2_item(item: TestItem):
+    """Add a new item to test2 collection"""
+    item_dict = {
+        "name": item.name,
+        "description": item.description,
+        "created_at": datetime.utcnow()
+    }
+
+    result = await test2_collection.insert_one(item_dict)
+    created_item = await test2_collection.find_one({"_id": result.inserted_id})
+
+    return {
+        "id": str(created_item["_id"]),
+        "name": created_item["name"],
+        "description": created_item.get("description"),
+        "created_at": created_item["created_at"].isoformat()
+    }
+
 @app.get("/api/test-items")
 async def get_test_items():
     """Get all test items from MongoDB"""
@@ -91,6 +116,22 @@ async def get_test_items():
             "created_at": document["created_at"].isoformat()
         })
     
+    return items
+
+@app.get("/api/test2")
+async def get_test2_items():
+    """Get all items from test2 collection"""
+    cursor = test2_collection.find({}).sort("created_at", -1)
+    items = []
+
+    async for document in cursor:
+        items.append({
+            "id": str(document["_id"]),
+            "name": document["name"],
+            "description": document.get("description"),
+            "created_at": document["created_at"].isoformat()
+        })
+
     return items
 
 @app.delete("/api/test-items/{item_id}")

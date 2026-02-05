@@ -29,7 +29,7 @@ async def disconnect_db():
 async def ensure_collections():
     """
     Explicitly create required collections if they do not exist.
-    Safe to call multiple times (idempotent).
+    Safe to call multiple times.
     """
     existing = await database.list_collection_names()
 
