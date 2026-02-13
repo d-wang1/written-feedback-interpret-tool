@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useEffect } from 'react'
 import FeedbackForm from './components/FeedbackForm'
 import OutputPanel from './components/OutputPanel'
 import styles from './App.module.css'
@@ -12,6 +12,11 @@ export default function App() {
     soften: false,
     caseSupport: false,
   })
+
+  
+  useEffect(() => {
+    document.title = 'Written Feedback Interpretation Tool'
+  }, [])
 
   const canGenerate = useMemo(() => inputText.trim().length > 0, [inputText])
 
