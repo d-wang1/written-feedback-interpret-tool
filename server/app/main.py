@@ -11,8 +11,7 @@ from app.mongodb import (
     connect_db,
     disconnect_db,
     ensure_collections,
-    test_items_collection,
-    test2_collection,
+    feedback_records_collection
 )
 from bson import ObjectId
 
@@ -44,113 +43,117 @@ async def startup():
 async def shutdown():
     await disconnect_db()
 
-# Only 1 test model
+
 class TestItem(BaseModel):
     name: str
     description: Optional[str] = None
+
+class FeedbackRecord(BaseModel):
+    input_text: str
+    methods: list[str]
+    output_text: str
 
 @app.get("/api/health")
 def health():
     return {"ok": True}
 
-@app.get("/api/db-status")
-async def db_status():
-    """Check MongoDB connection"""
-    try:
-        await test_items_collection.count_documents({})
-        return {"database": "connected", "type": "MongoDB Atlas"}
-    except Exception as e:
-        return {"database": "error", "message": str(e)}
+# @app.get("/api/db-status")
+# async def db_status():
+#     """Check MongoDB connection"""
+#     try:
+#         await test_items_collection.count_documents({})
+#         return {"database": "connected", "type": "MongoDB Atlas"}
+#     except Exception as e:
+#         return {"database": "error", "message": str(e)}
 
-# MongoDB CRUD operations
-@app.post("/api/test-items")
-async def create_test_item(item: TestItem):
-    """Add a new test item to MongoDB"""
-    item_dict = {
-        "name": item.name,
-        "description": item.description,
-        "created_at": datetime.utcnow()
-    }
+# # MongoDB CRUD operations
+# @app.post("/api/test-items")
+# async def create_test_item(item: TestItem):
+#     """Add a new test item to MongoDB"""
+#     item_dict = {
+#         "name": item.name,
+#         "description": item.description,
+#         "created_at": datetime.utcnow()
+#     }
     
-    result = await test_items_collection.insert_one(item_dict)
-    created_item = await test_items_collection.find_one({"_id": result.inserted_id})
+#     result = await test_items_collection.insert_one(item_dict)
+#     created_item = await test_items_collection.find_one({"_id": result.inserted_id})
     
-    # Convert ObjectId to string
-    return {
-        "id": str(created_item["_id"]),
-        "name": created_item["name"],
-        "description": created_item["description"],
-        "created_at": created_item["created_at"].isoformat()
-    }
+#     # Convert ObjectId to string
+#     return {
+#         "id": str(created_item["_id"]),
+#         "name": created_item["name"],
+#         "description": created_item["description"],
+#         "created_at": created_item["created_at"].isoformat()
+#     }
 
-@app.post("/api/test2")
-async def create_test2_item(item: TestItem):
-    """Add a new item to test2 collection"""
-    item_dict = {
-        "name": item.name,
-        "description": item.description,
-        "created_at": datetime.utcnow()
-    }
+# @app.post("/api/test2")
+# async def create_test2_item(item: TestItem):
+#     """Add a new item to test2 collection"""
+#     item_dict = {
+#         "name": item.name,
+#         "description": item.description,
+#         "created_at": datetime.utcnow()
+#     }
 
-    result = await test2_collection.insert_one(item_dict)
-    created_item = await test2_collection.find_one({"_id": result.inserted_id})
+#     result = await test2_collection.insert_one(item_dict)
+#     created_item = await test2_collection.find_one({"_id": result.inserted_id})
 
-    return {
-        "id": str(created_item["_id"]),
-        "name": created_item["name"],
-        "description": created_item.get("description"),
-        "created_at": created_item["created_at"].isoformat()
-    }
+#     return {
+#         "id": str(created_item["_id"]),
+#         "name": created_item["name"],
+#         "description": created_item.get("description"),
+#         "created_at": created_item["created_at"].isoformat()
+#     }
 
-@app.get("/api/test-items")
-async def get_test_items():
-    """Get all test items from MongoDB"""
-    cursor = test_items_collection.find({}).sort("created_at", -1)
-    items = []
+# @app.get("/api/test-items")
+# async def get_test_items():
+#     """Get all test items from MongoDB"""
+#     cursor = test_items_collection.find({}).sort("created_at", -1)
+#     items = []
     
-    async for document in cursor:
-        items.append({
-            "id": str(document["_id"]),
-            "name": document["name"],
-            "description": document.get("description"),
-            "created_at": document["created_at"].isoformat()
-        })
+#     async for document in cursor:
+#         items.append({
+#             "id": str(document["_id"]),
+#             "name": document["name"],
+#             "description": document.get("description"),
+#             "created_at": document["created_at"].isoformat()
+#         })
     
-    return items
+#     return items
 
-@app.get("/api/test2")
-async def get_test2_items():
-    """Get all items from test2 collection"""
-    cursor = test2_collection.find({}).sort("created_at", -1)
-    items = []
+# @app.get("/api/test2")
+# async def get_test2_items():
+#     """Get all items from test2 collection"""
+#     cursor = test2_collection.find({}).sort("created_at", -1)
+#     items = []
 
-    async for document in cursor:
-        items.append({
-            "id": str(document["_id"]),
-            "name": document["name"],
-            "description": document.get("description"),
-            "created_at": document["created_at"].isoformat()
-        })
+#     async for document in cursor:
+#         items.append({
+#             "id": str(document["_id"]),
+#             "name": document["name"],
+#             "description": document.get("description"),
+#             "created_at": document["created_at"].isoformat()
+#         })
 
-    return items
+#     return items
 
-@app.delete("/api/test-items/{item_id}")
-async def delete_test_item(item_id: str):
-    """Delete a test item by ID from MongoDB"""
-    try:
-        result = await test_items_collection.delete_one({"_id": ObjectId(item_id)})
+# @app.delete("/api/test-items/{item_id}")
+# async def delete_test_item(item_id: str):
+#     """Delete a test item by ID from MongoDB"""
+#     try:
+#         result = await test_items_collection.delete_one({"_id": ObjectId(item_id)})
         
-        if result.deleted_count == 0:
-            raise HTTPException(status_code=404, detail="Test item not found")
+#         if result.deleted_count == 0:
+#             raise HTTPException(status_code=404, detail="Test item not found")
         
-        return {"message": f"Test item {item_id} deleted successfully"}
+#         return {"message": f"Test item {item_id} deleted successfully"}
     
-    except Exception as e:
-        raise HTTPException(status_code=400, detail="Invalid item ID")
+#     except Exception as e:
+#         raise HTTPException(status_code=400, detail="Invalid item ID")
 
-# Your existing interpret route
 @app.post("/api/interpret")
-def interpret(req: dict):
+async def interpret(req: dict):
     text = req.get("text", "")
     options = req.get("options", {})
     
@@ -184,6 +187,25 @@ def interpret(req: dict):
         )
 
         output = resp.choices[0].message.content or ""
+        
+        methods = []
+        if options:
+            if options.get("simplify"):
+                methods.append("simplify")
+            if options.get("caseSupport"):
+                methods.append("caseSupport")
+            if options.get("soften"):
+                methods.append("soften")
+            
+        record = {
+            "input_text": text,
+            "methods": methods,
+            "output_text": output,
+            "created_at": datetime.utcnow()
+        }
+        
+        await feedback_records_collection.insert_one(record)
+        
         return {"output": output}
 
     except HTTPException:
@@ -191,3 +213,21 @@ def interpret(req: dict):
     except Exception as e:
         print("interpret() error:", repr(e))
         raise HTTPException(status_code=500, detail="LLM request failed")
+    
+
+@app.get("/api/feedback-records")
+async def get_feedback_records():
+    """Get all feedback records from MongoDB"""
+    cursor = feedback_records_collection.find({}).sort("created_at", -1)
+    records = []
+    
+    async for document in cursor:
+        records.append({
+            "id": str(document["_id"]),
+            "input_text": document["input_text"],
+            "methods": document["methods"],
+            "output_text": document["output_text"],
+            "created_at": document["created_at"].isoformat()
+        })
+    
+    return records

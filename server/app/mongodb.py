@@ -8,8 +8,10 @@ client = AsyncIOMotorClient(MONGO_URL)
 database = client.feedback_db
 
 # Collections (handles)
-test_items_collection = database.test_items
-test2_collection = database.test2
+# test_items_collection = database.test_items
+# test2_collection = database.test2
+
+feedback_records_collection = database.feedback_records
 
 
 async def connect_db():
@@ -33,8 +35,11 @@ async def ensure_collections():
     """
     existing = await database.list_collection_names()
 
-    if "test_items" not in existing:
-        await database.create_collection("test_items")
+    # if "test_items" not in existing:
+    #     await database.create_collection("test_items")
 
-    if "test2" not in existing:
-        await database.create_collection("test2")
+    # if "test2" not in existing:
+    #     await database.create_collection("test2")
+
+    if "feedback_records" not in existing:  # Add this block
+        await database.create_collection("feedback_records")
