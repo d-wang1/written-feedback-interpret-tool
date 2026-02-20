@@ -197,10 +197,10 @@
 }
 
 .footerTitle {
-  font-size: 1.1rem; /* Reduced from 1.25rem */
+  font-size: 0.9rem;
   font-weight: 600;
-  margin-bottom: 0.75rem; /* Reduced from 1rem */
-  color: #fbbf24;
+  margin-bottom: 0.5rem;
+  color: #667eea; /* Changed from #fbbf24 to navbar purple */
 }
 
 .featureList {

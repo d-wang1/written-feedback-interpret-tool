@@ -12,9 +12,9 @@ export default function About() {
         <div className={styles.aboutSection}>
           <h2>Our Mission</h2>
           <p>
-            EchoAI was created to bridge the gap between complex academic feedback and student understanding. 
-            Using advanced AI technology, we transform written feedback into clear, actionable insights that 
-            help students improve their work and learning outcomes.
+            EchoAI helps turn confusing academic feedback into plain English explanations students can
+             actually use. We use AI to break down written comments into clear, practical guidance so you
+              know what to fix, why it matters, and how to improve.
           </p>
         </div>
       </div>
