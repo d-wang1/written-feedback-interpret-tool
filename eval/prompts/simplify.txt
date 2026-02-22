@@ -1,0 +1,5 @@
+Rewrite the following text to be simpler and clearer while preserving meaning.
+Return only the rewritten text.
+
+TEXT:
+{input}

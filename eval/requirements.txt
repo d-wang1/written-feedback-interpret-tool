@@ -1,0 +1,13 @@
+setuptools==80.9.0
+pyyaml==6.0.2
+pandas==2.2.2
+tqdm==4.66.4
+requests==2.32.3
+textstat==0.7.4
+bert-score==0.3.13
+vadersentiment==3.3.2
+numpy==1.26.4
+detoxify==0.5.2
+torch==2.4.1
+groq==0.11.0
+httpx==0.27.2

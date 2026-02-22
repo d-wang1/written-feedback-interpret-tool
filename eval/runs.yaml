@@ -1,0 +1,12 @@
+runs:
+  - name: groq_llama8b_t02
+    provider: groq
+    model: llama-3.1-8b-instant
+    temperature: 0.2
+    max_tokens: 512
+
+  - name: groq_llama70b_t02
+    provider: groq
+    model: llama-3.3-70b-versatile
+    temperature: 0.2
+    max_tokens: 512
