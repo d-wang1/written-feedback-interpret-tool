@@ -7,6 +7,9 @@ import numpy as np
 from bert_score import score as bert_score
 
 
+from transformers.utils import logging as hf_logging
+hf_logging.set_verbosity_error()
+
 _WORD_RE = re.compile(r"[A-Za-z']+")
 
 
