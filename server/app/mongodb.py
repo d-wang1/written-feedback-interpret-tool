@@ -3,7 +3,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from pymongo.errors import CollectionInvalid
 
 # MongoDB connection
-MONGO_URL = os.getenv("MONGO_URL")
+MONGO_URL = os.getenv("MONGO_URL","mongodb://mongo:27017")
 client = AsyncIOMotorClient(MONGO_URL)
 database = client.feedback_db
 
