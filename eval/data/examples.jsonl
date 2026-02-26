@@ -1,6 +1,25 @@
-{"id":"s1","task":"simplify","input":"Your submission fails to adequately demonstrate the underlying algorithmic reasoning...","reference":""}
-{"id":"t1","task":"soften","input":"This is sloppy and unacceptable. Fix it.","reference":""}
-{"id":"t2","task":"soften","input":"This is sloppy and unacceptable. Fix it.","reference":"This needs improvement. Please revise it."}
-{"id":"t3","task":"soften","input":"This is sloppy and unacceptable. Fix it.","reference":"This could be improved. Please take another look at it."}
-{"id":"t4","task":"soften","input":"This is sloppy and unacceptable. Fix it.","reference":"This is not up to the standard we expect. Please make the necessary changes."}
-{"id":"t5","task":"soften","input":"This is sloppy and unacceptable. Fix it.","reference":"This does not meet our expectations. Please work on improving it."}
+{"id":"simp_001","task":"simplify","input":"Your submission demonstrates partial conceptual alignment with the specification; however, the implementation exhibits several non-trivial correctness defects in edge-case handling (e.g., null inputs and off-by-one indexing) that invalidate the claimed time complexity."}
+{"id":"simp_002","task":"simplify","input":"While your discussion gestures at the relevant literature, it does not adequately operationalize key constructs, and the causal claims are not supported by the presented evidence nor by an appropriate identification strategy."}
+{"id":"simp_003","task":"simplify","input":"Please revise the introduction to (1) clearly state the research question, (2) motivate why existing approaches are insufficient, and (3) summarize your contributions in a concrete, enumerated list."}
+{"id":"simp_004","task":"simplify","input":"The derivation is difficult to follow because intermediate steps are omitted; define all variables, show the algebraic manipulation explicitly, and explain why each transformation is valid."}
+{"id":"simp_005","task":"simplify","input":"Your analysis conflates correlation and causation; as written, the observed association could plausibly be driven by confounding variables that are not controlled for in the model."}
+{"id":"simp_006","task":"simplify","input":"The current draft is overly verbose and contains repeated points; consolidate similar paragraphs, remove redundant sentences, and keep each paragraph focused on a single idea."}
+{"id":"simp_007","task":"simplify","input":"You have not met the rubric criteria for 'interpretation': you report numerical results, but you do not explain what they imply about model behavior, limitations, or reliability."}
+{"id":"simp_008","task":"simplify","input":"Your code works on the provided examples but fails under hidden tests because it assumes the input is sorted and non-empty, which the problem statement does not guarantee."}
+{"id":"simp_009","task":"simplify","input":"This section would benefit from clearer signposting: add short topic sentences, define key terms before using them, and include a brief roadmap at the end of the first paragraph."}
+{"id":"simp_010","task":"simplify","input":"The argument would be stronger if you distinguish between normative claims (what should be) and descriptive claims (what is), and support each with appropriate sources."}
+{"id":"simp_011","task":"simplify","input":"Your figure caption is incomplete; it should explain what is plotted, what each axis represents (with units), and the main takeaway the reader should notice."}
+{"id":"simp_012","task":"simplify","input":"The conclusion introduces new ideas that are not discussed earlier; move those points into the main body or remove them, and instead summarize the most important findings and next steps."}
+
+{"id":"soft_001","task":"soften","input":"This is hard to read. You need to rewrite it because it’s all over the place."}
+{"id":"soft_002","task":"soften","input":"Did you even look at the rubric? This doesn’t meet the requirements at all."}
+{"id":"soft_003","task":"soften","input":"Your code is a mess and it’s obvious you didn’t test anything."}
+{"id":"soft_004","task":"soften","input":"This explanation makes no sense. You’re just throwing terms around."}
+{"id":"soft_005","task":"soften","input":"You keep making the same mistake. At this point you should know better."}
+{"id":"soft_006","task":"soften","input":"I’m not sure what you were thinking here, but this is not acceptable for a final submission."}
+{"id":"soft_007","task":"soften","input":"You’re missing the point of the assignment and it shows."}
+{"id":"soft_008","task":"soften","input":"This is sloppy. The formatting is inconsistent and the writing is careless."}
+{"id":"soft_009","task":"soften","input":"Stop hand-waving and actually justify your claims with evidence."}
+{"id":"soft_010","task":"soften","input":"If you had started earlier, you wouldn’t be in this situation. This is on you."}
+{"id":"soft_011","task":"soften","input":"You’re clearly not prepared. Please come back when you’ve done the reading."}
+{"id":"soft_012","task":"soften","input":"This is not how professionals write. Fix it."}
