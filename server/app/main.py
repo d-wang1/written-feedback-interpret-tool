@@ -14,6 +14,8 @@ from app.mongodb import (
     feedback_records_collection
 )
 from bson import ObjectId
+from auth import router as auth_router
+app.include_router(auth_router)
 
 load_dotenv()
 
