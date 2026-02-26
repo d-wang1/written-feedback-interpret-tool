@@ -48,6 +48,12 @@ export default function Navbar() {
           >
             Contact
           </Link>
+          <Link 
+            to="/logs" 
+            className={`${styles.navLink} ${isActive('/logs') ? styles.activeLink : ''}`}
+          >
+            Logs
+          </Link>
           <Link to="/login" className={styles.loginButton}>
             <span className={styles.loginIcon}>👤</span>
             Login
@@ -67,6 +73,7 @@ export default function Navbar() {
           <Link to="/features" className={styles.mobileNavLink}>Features</Link>
           <Link to="/about" className={styles.mobileNavLink}>About</Link>
           <Link to="/contact" className={styles.mobileNavLink}>Contact</Link>
+          <Link to="/logs" className={styles.mobileNavLink}>Logs</Link>
           <Link to="/login" className={styles.mobileLoginButton}>
             <span className={styles.loginIcon}>👤</span>
             Login

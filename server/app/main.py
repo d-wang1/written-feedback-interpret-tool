@@ -11,7 +11,8 @@ from app.mongodb import (
     connect_db,
     disconnect_db,
     ensure_collections,
-    feedback_records_collection
+    feedback_records_collection,
+    database
 )
 from bson import ObjectId
 from auth import router as auth_router
@@ -43,8 +44,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 app.include_router(auth_router)
-
- 
 
 @app.on_event("startup")
 async def startup():
