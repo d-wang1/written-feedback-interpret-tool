@@ -52,7 +52,7 @@ async def signup(user_data: UserSignup):
     }
     
     # Create token
-    access_token_expires = timedelta(days=7 if user_data.remember_me else 1)
+    access_token_expires = timedelta(days=1)
     access_token = create_access_token(
         data={"sub": user_id, "email": user_data.email}, 
         expires_delta=access_token_expires
@@ -71,7 +71,7 @@ async def login(user_data: UserLogin):
         )
     
     # Create token
-    access_token_expires = timedelta(days=7 if user_data.remember_me else 1)
+    access_token_expires = timedelta(days=1)
     access_token = create_access_token(
         data={"sub": user["id"], "email": user["email"]}, 
         expires_delta=access_token_expires
