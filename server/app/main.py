@@ -52,6 +52,8 @@ class FeedbackRecord(BaseModel):
     input_text: str
     methods: list[str]
     output_text: str
+    input_length: int
+    output_length: int
 
 @app.get("/api/health")
 def health():
@@ -188,6 +190,10 @@ async def interpret(req: dict):
 
         output = resp.choices[0].message.content or ""
         
+        # Calculate lengths
+        input_length = len(text)
+        output_length = len(output)
+        
         methods = []
         if options:
             if options.get("simplify"):
@@ -201,6 +207,8 @@ async def interpret(req: dict):
             "input_text": text,
             "methods": methods,
             "output_text": output,
+            "input_length": input_length,
+            "output_length": output_length,
             "created_at": datetime.utcnow()
         }
         
@@ -227,6 +235,8 @@ async def get_feedback_records():
             "input_text": document["input_text"],
             "methods": document["methods"],
             "output_text": document["output_text"],
+            "input_length": document.get("input_length", 0),
+            "output_length": document.get("output_length", 0),
             "created_at": document["created_at"].isoformat()
         })
     
