@@ -8,6 +8,8 @@ import Features from './components/Features'
 import About from './components/About'
 import Contact from './components/Contact'
 import styles from './App.module.css'
+import Login from './components/Login'
+
 
 function HomePage() {
   const [inputText, setInputText] = useState('')
@@ -82,18 +84,23 @@ export default function App() {
   return (
     <Router>
       <div className={styles.app}>
-        <Navbar />
-        
-        <main className={styles.main}>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/features" element={<Features />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-          </Routes>
-        </main>
-        
-        <Footer />
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/*" element={
+            <>
+              <Navbar />
+              <main className={styles.main}>
+                <Routes>
+                  <Route path="/" element={<HomePage />} />
+                  <Route path="/features" element={<Features />} />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/contact" element={<Contact />} />
+                </Routes>
+              </main>
+              <Footer />
+            </>
+          } />
+        </Routes>
       </div>
     </Router>
   )
