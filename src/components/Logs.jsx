@@ -8,7 +8,7 @@ export default function Logs() {
 
   useEffect(() => {
     fetchLogs()
-    console.log('HI')
+    
   }, [])
 
   const fetchLogs = async () => {
@@ -21,7 +21,7 @@ export default function Logs() {
       }
       
       const data = await response.json()
-      console.log("Here's the logs", data)
+     // console.log("Here's the logs", data)
       setLogs(data || [])
     } catch (err) {
       setError(err.message)
@@ -47,11 +47,12 @@ export default function Logs() {
   }
 
   const formatOptions = (options) => {
+    console.log("heres the OPTIONS:", options)
     if (!options) return 'None'
     const selected = []
-    if (options.simplify) selected.push('Simplify')
-    if (options.soften) selected.push('Soften')
-    if (options.caseSupport) selected.push('Case Support')
+    if (options === "simplify") selected.push('Simplify')
+    if (options ==="soften") selected.push('Soften')
+    if (options === "caseSupport") selected.push('Case Support')
     return selected.length > 0 ? selected.join(', ') : 'None'
   }
 
@@ -114,7 +115,7 @@ export default function Logs() {
                   <div className={styles.logHeader}>
                     <div className={styles.logIndex}>#{index + 1}</div>
                     <div className={styles.logDate}>
-                      📅 {formatDate(log.created_at)}
+                       {formatDate(log.created_at)}
                     </div>
                   </div>
                   
@@ -129,7 +130,7 @@ export default function Logs() {
                     <div className={styles.logSection}>
                       <h4>Options Used</h4>
                       <div className={styles.logOptions}>
-                        {formatOptions(log.options)}
+                        {formatOptions(log.methods[0])}
                       </div>
                     </div>
                     
