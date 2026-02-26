@@ -1,0 +1,6 @@
+{"id":"s1","task":"simplify","input":"Your submission fails to adequately demonstrate the underlying algorithmic reasoning...","reference":""}
+{"id":"t1","task":"soften","input":"This is sloppy and unacceptable. Fix it.","reference":""}
+{"id":"t2","task":"soften","input":"This is sloppy and unacceptable. Fix it.","reference":"This needs improvement. Please revise it."}
+{"id":"t3","task":"soften","input":"This is sloppy and unacceptable. Fix it.","reference":"This could be improved. Please take another look at it."}
+{"id":"t4","task":"soften","input":"This is sloppy and unacceptable. Fix it.","reference":"This is not up to the standard we expect. Please make the necessary changes."}
+{"id":"t5","task":"soften","input":"This is sloppy and unacceptable. Fix it.","reference":"This does not meet our expectations. Please work on improving it."}

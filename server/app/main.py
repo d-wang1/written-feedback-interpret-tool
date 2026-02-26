@@ -14,6 +14,8 @@ from app.mongodb import (
     feedback_records_collection
 )
 from bson import ObjectId
+from auth import router as auth_router
+from fastapi.middleware.cors import CORSMiddleware
 
 load_dotenv()
 
@@ -33,6 +35,16 @@ def get_client():
     return client
 
 app = FastAPI(title="Written Feedback Interpretation API")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173", "http://localhost:3000"],  
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+app.include_router(auth_router)
+
+ 
 
 @app.on_event("startup")
 async def startup():
