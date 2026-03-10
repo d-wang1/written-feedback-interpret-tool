@@ -1,5 +1,5 @@
 import { useMemo, useState, useEffect } from 'react'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import FeedbackForm from './components/FeedbackForm'
 import OutputPanel from './components/OutputPanel'
 import Navbar from './components/Navbar'
@@ -7,13 +7,13 @@ import Footer from './components/Footer'
 import Features from './components/Features'
 import About from './components/About'
 import Contact from './components/Contact'
-import styles from './App.module.css'
 import Login from './components/Login'
 import Logs from './components/Logs'
-
-
+import { AuthProvider, useAuth } from './contexts/AuthContext'
+import styles from './App.module.css'
 
 function HomePage() {
+  const { user } = useAuth()  // Move this to the top level
   const [inputText, setInputText] = useState('')
   const [outputText, setOutputText] = useState('')
   const [isLoading, setIsLoading] = useState(false)
@@ -31,12 +31,16 @@ function HomePage() {
 
   async function handleGenerate() {
     setIsLoading(true)
+    
+    const userId = user?.id || null  // Use user from the top level
+    
     const res = await fetch("/api/interpret", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         text: inputText,
         options,
+        user_id: userId  // Send user ID if available
       }),
     })
 
@@ -84,27 +88,29 @@ function HomePage() {
 
 export default function App() {
   return (
-    <Router>
-      <div className={styles.app}>
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/*" element={
-            <>
-              <Navbar />
-              <main className={styles.main}>
-                <Routes>
-                  <Route path="/" element={<HomePage />} />
-                  <Route path="/features" element={<Features />} />
-                  <Route path="/about" element={<About />} />
-                  <Route path="/contact" element={<Contact />} />
-                  <Route path="/logs" element={<Logs />} />
-                </Routes>
-              </main>
-              <Footer />
-            </>
-          } />
-        </Routes>
-      </div>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <div className={styles.app}>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/*" element={
+              <>
+                <Navbar />
+                <main className={styles.main}>
+                  <Routes>
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/features" element={<Features />} />
+                    <Route path="/about" element={<About />} />
+                    <Route path="/contact" element={<Contact />} />
+                    <Route path="/logs" element={<Logs />} />
+                  </Routes>
+                </main>
+                <Footer />
+              </>
+            } />
+          </Routes>
+        </div>
+      </Router>
+    </AuthProvider>
   )
 }
