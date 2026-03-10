@@ -26,20 +26,31 @@ export default function Login() {
     setError('')
 
     try {
-      // Add your login API call here
-      const response = await fetch('/api/auth/login', {
+      const response = await fetch('http://localhost:8000/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+          remember_me: formData.rememberMe
+        })
       })
 
       if (response.ok) {
-        navigate('/dashboard')
+        const data = await response.json()
+        // Store token in localStorage
+        localStorage.setItem('access_token', data.access_token)
+        localStorage.setItem('user_id', data.user_id)
+        localStorage.setItem('user_email', formData.email)
+        
+        // Redirect to dashboard or home
+        navigate('/')
       } else {
-        setError('Invalid email or password')
+        const errorData = await response.json()
+        setError(errorData.detail || 'Login failed. Please try again.')
       }
     } catch (err) {
-      setError('Login failed. Please try again.')
+      setError('Network error. Please check your connection.')
     } finally {
       setIsLoading(false)
     }
@@ -59,7 +70,7 @@ export default function Login() {
                   </linearGradient>
                 </defs>
                 <path 
-                  d="M16 2L20 10L28 11L22 17L24 25L16 21L8 25L10 17L4 11L12 10Z" 
+                  d="M16 2L20 10L28 11L22 17L24 25L16 21L8 25L10 17L4 11Z" 
                   fill="url(#starGradient)"
                 />
               </svg>
@@ -115,8 +126,8 @@ export default function Login() {
                 <span className={styles.checkboxText}>Remember me</span>
               </label>
               
-              <Link to="/forgot-password" className={styles.forgotLink}>
-                Forgot password?
+              <Link to="/signup" className={styles.forgotLink}>
+                Don't have an account? Sign up
               </Link>
             </div>
 
@@ -138,9 +149,9 @@ export default function Login() {
 
           <div className={styles.loginFooter}>
             <p className={styles.signupPrompt}>
-              Don't have an account?{' '}
-              <Link to="/signup" className={styles.signupLink}>
-                Sign up for free
+              Forgot your password?{' '}
+              <Link to="/forgot-password" className={styles.signupLink}>
+                Reset it here
               </Link>
             </p>
           </div>

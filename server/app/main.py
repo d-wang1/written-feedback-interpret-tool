@@ -26,6 +26,11 @@ if not API_KEY:
 
 client = None
 
+async def get_database():
+    return database
+
+__all__ = ["database", "get_database"]
+
 def get_client():
     global client
     if client is None:
@@ -44,6 +49,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 app.include_router(auth_router)
+
+
 
 @app.on_event("startup")
 async def startup():
