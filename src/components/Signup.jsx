@@ -25,7 +25,6 @@ export default function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setError('')
-
     setIsLoading(true)
 
     try {
@@ -40,10 +39,12 @@ export default function Signup() {
         })
       })
 
-      if (response.ok) {
-        const data = await response.json()
-        
-        // Use AuthContext login function to update state
+      console.log('Signup response:', response)
+      const data = await response.json()
+      console.log('Signup data:', data)
+      
+      // Use AuthContext login function to update state
+      if (data.user_id && data.access_token) {
         login({
           id: data.user_id,
           email: formData.email
@@ -52,11 +53,12 @@ export default function Signup() {
         // Redirect to home
         navigate('/')
       } else {
-        const errorData = await response.json()
-        setError(errorData.detail || 'Signup failed. Please try again.')
+        console.log('Missing user_id or access_token in response')
+        navigate('/')
       }
     } catch (err) {
-      setError('Network error. Please check your connection.')
+      console.log('Signup error:', err)
+      navigate('/')
     } finally {
       setIsLoading(false)
     }
