@@ -80,7 +80,7 @@ export default function Navbar() {
           {user ? (
             <>
               <span className={styles.userInfo}>
-                👋 {user.email}
+                 {user.email}
               </span>
               <button onClick={handleLogout} className={styles.logoutButton}>
                 Logout
@@ -112,7 +112,7 @@ export default function Navbar() {
           {user ? (
             <>
               <span className={styles.userInfo}>
-                👋 {user.email}
+                 {user.email}
               </span>
               <button onClick={handleLogout} className={styles.mobileLogoutButton}>
                 Logout

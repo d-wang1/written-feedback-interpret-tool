@@ -70,7 +70,7 @@ export default function Users() {
           Users ({users.length})
         </h1>
         <button onClick={fetchUsers} className={styles.refreshButton}>
-          🔄 Refresh
+          Refresh
         </button>
       </div>
 

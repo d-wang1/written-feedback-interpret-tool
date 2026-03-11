@@ -105,7 +105,7 @@ export default function Logs() {
             <div className={styles.logsHeader}>
               <h2>Recent Feedback Records ({logs.length})</h2>
               <button className={styles.refreshButton} onClick={fetchLogs}>
-                🔄 Refresh
+                 Refresh
               </button>
             </div>
             
