@@ -33,7 +33,9 @@ export default function Users() {
       month: 'short',
       day: 'numeric',
       hour: '2-digit',
-      minute: '2-digit'
+      minute: '2-digit',
+      timeZone: 'America/New_York',
+      timeZoneName: 'short'
     })
   }
 
@@ -64,7 +66,9 @@ export default function Users() {
   return (
     <div className={styles.container}>
       <div className={styles.logsHeader}>
-        <h1 className={styles.logsTitle}>Users</h1>
+        <h1 className={styles.logsTitle}>
+          Users ({users.length})
+        </h1>
         <button onClick={fetchUsers} className={styles.refreshButton}>
           🔄 Refresh
         </button>

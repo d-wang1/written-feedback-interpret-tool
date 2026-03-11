@@ -44,17 +44,24 @@ export default function Signup() {
       console.log('Signup data:', data)
       
       // Use AuthContext login function to update state
-      if (data.user_id && data.access_token) {
+      if (response.ok) {
+        console.log('Calling login function with:', {
+          id: data.user_id,
+          email: formData.email
+        }, data.access_token)
+        
         login({
           id: data.user_id,
           email: formData.email
         }, data.access_token)
         
+        console.log('Login function called, redirecting to home')
         // Redirect to home
         navigate('/')
       } else {
-        console.log('Missing user_id or access_token in response')
-        navigate('/')
+        console.log('Signup failed, response not ok')
+        const errorData = await response.json()
+        setError(errorData.detail || 'Signup failed. Please try again.')
       }
     } catch (err) {
       console.log('Signup error:', err)

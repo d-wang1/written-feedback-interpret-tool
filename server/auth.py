@@ -13,10 +13,10 @@ security = HTTPBearer()
 SECRET_KEY = "your-secret-key-here"
 ALGORITHM = "HS256"
 
-# Database connection (add this to your main.py or import from there)
+# Database connection
 async def get_database():
-    # This should be imported from your main.py
-    from app.main import database
+    # Import database from the main app module
+    from app.mongodb import database
     return database
 
 class UserLogin(BaseModel):
@@ -28,6 +28,7 @@ class UserSignup(BaseModel):
     email: str
     password: str
     full_name: Optional[str] = None
+    remember_me: Optional[bool] = False
 
 class Token(BaseModel):
     access_token: str
@@ -106,6 +107,54 @@ async def get_all_users():
         user["_id"] = str(user["_id"])  # Convert ObjectId to string
         users.append(user)
     return users
+
+@router.post("/users/delete/{user_id}")
+async def delete_user_post(user_id: str):
+    db = await get_database()
+    
+    try:
+        # Convert string ID to ObjectId
+        from bson import ObjectId
+        object_id = ObjectId(user_id)
+    except:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid user ID format"
+        )
+    
+    result = await db.users.delete_one({"_id": object_id})
+    
+    if result.deleted_count == 0:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="User not found"
+        )
+    
+    return {"message": f"User {user_id} deleted successfully"}
+
+@router.delete("/users/{user_id}")
+async def delete_user(user_id: str):
+    db = await get_database()
+    
+    try:
+        # Convert string ID to ObjectId
+        from bson import ObjectId
+        object_id = ObjectId(user_id)
+    except:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid user ID format"
+        )
+    
+    result = await db.users.delete_one({"_id": object_id})
+    
+    if result.deleted_count == 0:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="User not found"
+        )
+    
+    return {"message": f"User {user_id} deleted successfully"}
 
 @router.get("/me")
 async def get_current_user(token: str = Depends(security)):
