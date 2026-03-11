@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import styles from '../App.module.css'
 
-export default function Login() {
+export default function Signup() {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -24,16 +24,18 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    setIsLoading(true)
     setError('')
 
+    setIsLoading(true)
+
     try {
-      const response = await fetch('http://localhost:8000/api/auth/login', {
+      const response = await fetch('http://localhost:8000/api/auth/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           email: formData.email,
           password: formData.password,
+          full_name: '',
           remember_me: formData.rememberMe
         })
       })
@@ -47,11 +49,11 @@ export default function Login() {
           email: formData.email
         }, data.access_token)
         
-        // Redirect to dashboard or home
+        // Redirect to home
         navigate('/')
       } else {
         const errorData = await response.json()
-        setError(errorData.detail || 'Login failed. Please try again.')
+        setError(errorData.detail || 'Signup failed. Please try again.')
       }
     } catch (err) {
       setError('Network error. Please check your connection.')
@@ -82,8 +84,8 @@ export default function Login() {
       <div className={styles.loginContainer}>
         <div className={styles.loginCard}>
           <div className={styles.loginHeader}>
-            <h1 className={styles.loginTitle}>Welcome Back</h1>
-            <p className={styles.loginSubtitle}>Sign in to your EchoAI account</p>
+            <h1 className={styles.loginTitle}>Create Account</h1>
+            <p className={styles.loginSubtitle}>Join EchoAI today</p>
           </div>
 
           <form className={styles.loginForm} onSubmit={handleSubmit}>
@@ -114,7 +116,7 @@ export default function Login() {
                 id="password"
                 name="password"
                 className={styles.formInput}
-                placeholder="Enter your password"
+                placeholder="Create a password"
                 value={formData.password}
                 onChange={handleChange}
                 required
@@ -132,10 +134,6 @@ export default function Login() {
                 />
                 <span className={styles.checkboxText}>Remember me</span>
               </label>
-              
-              <Link to="/signup" className={styles.forgotLink}>
-                Don't have an account? Sign up
-              </Link>
             </div>
 
             <button
@@ -146,19 +144,19 @@ export default function Login() {
               {isLoading ? (
                 <>
                   <span className={styles.loading}></span>
-                  Signing in...
+                  Creating Account...
                 </>
               ) : (
-                'Sign In'
+                'Sign Up'
               )}
             </button>
           </form>
 
           <div className={styles.loginFooter}>
             <p className={styles.signupPrompt}>
-              Forgot your password?{' '}
-              <Link to="/forgot-password" className={styles.signupLink}>
-                Reset it here
+              Already have an account?{' '}
+              <Link to="/login" className={styles.signupLink}>
+                Sign in here
               </Link>
             </p>
           </div>

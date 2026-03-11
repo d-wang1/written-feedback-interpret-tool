@@ -68,6 +68,12 @@ export default function Navbar() {
           >
             Logs
           </Link>
+          <Link 
+            to="/users" 
+            className={`${styles.navLink} ${isActive('/users') ? styles.activeLink : ''}`}
+          >
+            Users
+          </Link>
         </div>
 
         <div className={styles.navRight}>
@@ -102,6 +108,7 @@ export default function Navbar() {
           <Link to="/about" className={styles.mobileNavLink}>About</Link>
           <Link to="/contact" className={styles.mobileNavLink}>Contact</Link>
           <Link to="/logs" className={styles.mobileNavLink}>Logs</Link>
+          <Link to="/users" className={styles.mobileNavLink}>Users</Link>
           {user ? (
             <>
               <span className={styles.userInfo}>

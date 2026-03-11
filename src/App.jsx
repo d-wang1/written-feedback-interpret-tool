@@ -8,7 +8,9 @@ import Features from './components/Features'
 import About from './components/About'
 import Contact from './components/Contact'
 import Login from './components/Login'
+import Signup from './components/Signup'
 import Logs from './components/Logs'
+import Users from './components/Users'
 import { AuthProvider, useAuth } from './contexts/AuthContext'
 import styles from './App.module.css'
 
@@ -93,6 +95,7 @@ export default function App() {
         <div className={styles.app}>
           <Routes>
             <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
             <Route path="/*" element={
               <>
                 <Navbar />
@@ -103,6 +106,7 @@ export default function App() {
                     <Route path="/about" element={<About />} />
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/logs" element={<Logs />} />
+                    <Route path="/users" element={<Users />} />
                   </Routes>
                 </main>
                 <Footer />
