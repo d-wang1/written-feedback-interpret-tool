@@ -58,23 +58,26 @@ export default function Login() {
 
   return (
     <div className={styles.loginPage}>
+      {/* EchoAI Logo that redirects home */}
+      <div className={styles.loginLogoContainer}>
+        <Link to="/" className={styles.loginLogoLink}>
+          <div className={styles.loginLogo}>
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+              <circle cx="16" cy="16" r="14" stroke="#4F46E5" strokeWidth="2"/>
+              <path d="M12 12L20 20M20 12L12 20" stroke="#4F46E5" strokeWidth="2"/>
+              <circle cx="16" cy="16" r="3" fill="#4F46E5"/>
+            </svg>
+            <div className={styles.loginLogoText}>
+              <span className={styles.echo}>Echo</span>
+              <span className={styles.ai}>AI</span>
+            </div>
+          </div>
+        </Link>
+      </div>
+
       <div className={styles.loginContainer}>
         <div className={styles.loginCard}>
           <div className={styles.loginHeader}>
-            <div className={styles.loginLogo}>
-              <svg width="48" height="48" viewBox="0 0 32 32" fill="none">
-                <defs>
-                  <linearGradient id="starGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#667eea"/>
-                    <stop offset="100%" stopColor="#764ba2"/>
-                  </linearGradient>
-                </defs>
-                <path 
-                  d="M16 2L20 10L28 11L22 17L24 25L16 21L8 25L10 17L4 11Z" 
-                  fill="url(#starGradient)"
-                />
-              </svg>
-            </div>
             <h1 className={styles.loginTitle}>Welcome Back</h1>
             <p className={styles.loginSubtitle}>Sign in to your EchoAI account</p>
           </div>
@@ -154,30 +157,6 @@ export default function Login() {
                 Reset it here
               </Link>
             </p>
-          </div>
-        </div>
-
-        <div className={styles.loginInfo}>
-          <h2 className={styles.infoTitle}>Transform Your Learning Experience</h2>
-          <ul className={styles.infoList}>
-            <li>🔄 Convert complex feedback into clear insights</li>
-            <li>💬 Soften harsh tones for better understanding</li>
-            <li>📚 Get case-based examples and support</li>
-            <li>⚡ Save time with instant AI-powered analysis</li>
-          </ul>
-          <div className={styles.infoStats}>
-            <div className={styles.stat}>
-              <div className={styles.statNumber}>10K+</div>
-              <div className={styles.statLabel}>Students Helped</div>
-            </div>
-            <div className={styles.stat}>
-              <div className={styles.statNumber}>95%</div>
-              <div className={styles.statLabel}>Success Rate</div>
-            </div>
-            <div className={styles.stat}>
-              <div className={styles.statNumber}>24/7</div>
-              <div className={styles.statLabel}>Available</div>
-            </div>
           </div>
         </div>
       </div>

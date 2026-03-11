@@ -98,6 +98,15 @@ def create_access_token(data: dict, expires_delta: timedelta):
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
 
+@router.get("/users")
+async def get_all_users():
+    db = await get_database()
+    users = []
+    async for user in db.users.find({}, {"password": 0}):  # Exclude password field
+        user["_id"] = str(user["_id"])  # Convert ObjectId to string
+        users.append(user)
+    return users
+
 @router.get("/me")
 async def get_current_user(token: str = Depends(security)):
     try:
