@@ -690,6 +690,41 @@
   gap: 1.5rem;
 }
 
+/* Login Page Logo Container */
+.loginLogoContainer {
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  z-index: 10;
+}
+
+.loginLogoLink {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: white;
+  transition: opacity 0.3s ease;
+}
+
+.loginLogoLink:hover {
+  opacity: 0.8;
+}
+
+.loginLogo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.loginLogoText {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
 /* Login Page Styles */
 .loginPage {
   min-height: 100vh;
@@ -698,12 +733,13 @@
   align-items: center;
   justify-content: center;
   padding: 2rem;
+  position: relative;
 }
 
 .loginContainer {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  max-width: 1200px;
+  display: flex;
+  justify-content: center;
+  max-width: 500px;
   width: 100%;
   background: white;
   border-radius: 20px;
@@ -811,6 +847,32 @@
   color: #764ba2;
 }
 
+/* Fix login form button - make it more specific */
+.loginForm .loginButton {
+  padding: 1rem;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.loginForm .loginButton:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.loginForm .loginButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
 .loginButton {
   padding: 1rem;
   border: none;
@@ -855,19 +917,9 @@
   color: #764ba2;
 }
 
-/* Login Info Section */
+/* Hide the old login info section */
 .loginInfo {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 3rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  color: white;
-}
-
-.infoTitle {
-  font-size: 2rem;
-  font-weight: 700;
+  display: none;
   margin-bottom: 2rem;
   line-height: 1.2;
 }
@@ -1142,4 +1194,45 @@
   .logText {
     font-size: 0.875rem;
   }
+}
+
+.logoutButton {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.25rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.logoutButton:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.userInfo {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.875rem;
+  margin-right: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.mobileLogoutButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1rem 2rem;
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.mobileLogoutButton:hover {
+  background: rgba(255, 255, 255, 0.1);
 }
