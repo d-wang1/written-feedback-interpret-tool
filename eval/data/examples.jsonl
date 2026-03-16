@@ -1,25 +1,100 @@
-{"id":"simp_001","task":"simplify","input":"Your submission demonstrates partial conceptual alignment with the specification; however, the implementation exhibits several non-trivial correctness defects in edge-case handling (e.g., null inputs and off-by-one indexing) that invalidate the claimed time complexity."}
-{"id":"simp_002","task":"simplify","input":"While your discussion gestures at the relevant literature, it does not adequately operationalize key constructs, and the causal claims are not supported by the presented evidence nor by an appropriate identification strategy."}
-{"id":"simp_003","task":"simplify","input":"Please revise the introduction to (1) clearly state the research question, (2) motivate why existing approaches are insufficient, and (3) summarize your contributions in a concrete, enumerated list."}
-{"id":"simp_004","task":"simplify","input":"The derivation is difficult to follow because intermediate steps are omitted; define all variables, show the algebraic manipulation explicitly, and explain why each transformation is valid."}
-{"id":"simp_005","task":"simplify","input":"Your analysis conflates correlation and causation; as written, the observed association could plausibly be driven by confounding variables that are not controlled for in the model."}
-{"id":"simp_006","task":"simplify","input":"The current draft is overly verbose and contains repeated points; consolidate similar paragraphs, remove redundant sentences, and keep each paragraph focused on a single idea."}
-{"id":"simp_007","task":"simplify","input":"You have not met the rubric criteria for 'interpretation': you report numerical results, but you do not explain what they imply about model behavior, limitations, or reliability."}
-{"id":"simp_008","task":"simplify","input":"Your code works on the provided examples but fails under hidden tests because it assumes the input is sorted and non-empty, which the problem statement does not guarantee."}
-{"id":"simp_009","task":"simplify","input":"This section would benefit from clearer signposting: add short topic sentences, define key terms before using them, and include a brief roadmap at the end of the first paragraph."}
-{"id":"simp_010","task":"simplify","input":"The argument would be stronger if you distinguish between normative claims (what should be) and descriptive claims (what is), and support each with appropriate sources."}
-{"id":"simp_011","task":"simplify","input":"Your figure caption is incomplete; it should explain what is plotted, what each axis represents (with units), and the main takeaway the reader should notice."}
-{"id":"simp_012","task":"simplify","input":"The conclusion introduces new ideas that are not discussed earlier; move those points into the main body or remove them, and instead summarize the most important findings and next steps."}
-
-{"id":"soft_001","task":"soften","input":"This is hard to read. You need to rewrite it because it’s all over the place."}
-{"id":"soft_002","task":"soften","input":"Did you even look at the rubric? This doesn’t meet the requirements at all."}
-{"id":"soft_003","task":"soften","input":"Your code is a mess and it’s obvious you didn’t test anything."}
-{"id":"soft_004","task":"soften","input":"This explanation makes no sense. You’re just throwing terms around."}
-{"id":"soft_005","task":"soften","input":"You keep making the same mistake. At this point you should know better."}
-{"id":"soft_006","task":"soften","input":"I’m not sure what you were thinking here, but this is not acceptable for a final submission."}
-{"id":"soft_007","task":"soften","input":"You’re missing the point of the assignment and it shows."}
-{"id":"soft_008","task":"soften","input":"This is sloppy. The formatting is inconsistent and the writing is careless."}
-{"id":"soft_009","task":"soften","input":"Stop hand-waving and actually justify your claims with evidence."}
-{"id":"soft_010","task":"soften","input":"If you had started earlier, you wouldn’t be in this situation. This is on you."}
-{"id":"soft_011","task":"soften","input":"You’re clearly not prepared. Please come back when you’ve done the reading."}
-{"id":"soft_012","task":"soften","input":"This is not how professionals write. Fix it."}
+{"id":"soft_001","task":"soften","input":"This is not how professionals write. Fix it."}
+{"id":"soft_002","task":"soften","input":"Your argument is all over the place and very hard to follow."}
+{"id":"soft_003","task":"soften","input":"You clearly did not read the instructions carefully."}
+{"id":"soft_004","task":"soften","input":"This paragraph is weak and does not say anything meaningful."}
+{"id":"soft_005","task":"soften","input":"Your conclusion feels rushed and incomplete."}
+{"id":"soft_006","task":"soften","input":"This draft is full of grammar mistakes."}
+{"id":"soft_007","task":"soften","input":"You need to stop using vague language everywhere."}
+{"id":"soft_008","task":"soften","input":"This explanation makes no sense in its current form."}
+{"id":"soft_009","task":"soften","input":"The structure here is confusing and poorly organized."}
+{"id":"soft_010","task":"soften","input":"Your evidence is not convincing at all."}
+{"id":"soft_011","task":"soften","input":"This sounds careless and underdeveloped."}
+{"id":"soft_012","task":"soften","input":"You are repeating yourself and wasting space."}
+{"id":"soft_013","task":"soften","input":"The tone here is inappropriate for an academic paper."}
+{"id":"soft_014","task":"soften","input":"This section is too shallow to be useful."}
+{"id":"soft_015","task":"soften","input":"Your thesis is weak and needs serious revision."}
+{"id":"soft_016","task":"soften","input":"You did not answer the question being asked."}
+{"id":"soft_017","task":"soften","input":"This claim is unsupported and should not be here."}
+{"id":"soft_018","task":"soften","input":"The analysis is superficial and misses the main point."}
+{"id":"soft_019","task":"soften","input":"This reads like you rushed it at the last minute."}
+{"id":"soft_020","task":"soften","input":"Your formatting is inconsistent and distracting."}
+{"id":"soft_021","task":"soften","input":"This example is irrelevant and weakens your argument."}
+{"id":"soft_022","task":"soften","input":"You need to be much more precise than this."}
+{"id":"soft_023","task":"soften","input":"Right now, this does not meet the expectations of the assignment."}
+{"id":"soft_024","task":"soften","input":"Several of your sentences are awkward and unclear."}
+{"id":"soft_025","task":"soften","input":"This section lacks focus and feels scattered."}
+{"id":"soft_026","task":"soften","input":"Your transitions are poor, so the paper feels choppy."}
+{"id":"soft_027","task":"soften","input":"This interpretation is too simplistic and overlooks important details."}
+{"id":"soft_028","task":"soften","input":"You need stronger sources because these are not doing enough work."}
+{"id":"soft_029","task":"soften","input":"The introduction is dull and does not engage the reader."}
+{"id":"soft_030","task":"soften","input":"This draft needs a lot more work before it is ready."}
+{"id":"soft_031","task":"soften","input":"Your topic sentence is weak and unhelpful."}
+{"id":"soft_032","task":"soften","input":"This paragraph wanders and never gets to the point."}
+{"id":"soft_033","task":"soften","input":"The wording here is clumsy and repetitive."}
+{"id":"soft_034","task":"soften","input":"This is too informal for a college-level essay."}
+{"id":"soft_035","task":"soften","input":"You are making a big claim here without doing the work to support it."}
+{"id":"soft_036","task":"soften","input":"This sentence is confusing and should be rewritten."}
+{"id":"soft_037","task":"soften","input":"Your discussion of the reading is inaccurate."}
+{"id":"soft_038","task":"soften","input":"The logic here breaks down and becomes hard to trust."}
+{"id":"soft_039","task":"soften","input":"This response feels incomplete and not fully thought through."}
+{"id":"soft_040","task":"soften","input":"You are relying too much on summary instead of analysis."}
+{"id":"soft_041","task":"soften","input":"This draft is weaker than your previous submission."}
+{"id":"soft_042","task":"soften","input":"The main idea gets buried under unnecessary details."}
+{"id":"soft_043","task":"soften","input":"This citation is incorrect and needs to be fixed."}
+{"id":"soft_044","task":"soften","input":"The explanation here is vague and unconvincing."}
+{"id":"soft_045","task":"soften","input":"This feels sloppy and not carefully proofread."}
+{"id":"soft_046","task":"soften","input":"You missed an important part of the prompt."}
+{"id":"soft_047","task":"soften","input":"Your sentence structure is monotonous and makes the writing flat."}
+{"id":"soft_048","task":"soften","input":"This example does not support your point effectively."}
+{"id":"soft_049","task":"soften","input":"The draft lacks depth and needs more development."}
+{"id":"soft_050","task":"soften","input":"At the moment, this work is below the standard I expect from you."}
+{"id":"simplify_001","task":"simplify","input":"Your argument demonstrates a commendable degree of nuance, but its central claim would benefit from more explicit articulation early in the essay."}
+{"id":"simplify_002","task":"simplify","input":"Although your response engages thoughtfully with the assigned reading, several portions rely on unnecessarily complex phrasing that obscures your main ideas."}
+{"id":"simplify_003","task":"simplify","input":"The organization of this paragraph is somewhat difficult to discern because the topic sentence does not clearly forecast the analytical direction that follows."}
+{"id":"simplify_004","task":"simplify","input":"To strengthen the coherence of your paper, consider revising transitions so that the progression from one idea to the next feels more intentional and transparent."}
+{"id":"simplify_005","task":"simplify","input":"Your use of evidence is promising, yet the quotations would be more effective if accompanied by clearer explanation of their relevance to your thesis."}
+{"id":"simplify_006","task":"simplify","input":"The introduction establishes an interesting topic, but it currently delays the presentation of your primary argument for too long."}
+{"id":"simplify_007","task":"simplify","input":"Several sentences contain multiple subordinate clauses, which makes the prose more difficult to follow than necessary."}
+{"id":"simplify_008","task":"simplify","input":"This section would be more persuasive if you distinguished more explicitly between summary of the source material and your own analysis of it."}
+{"id":"simplify_009","task":"simplify","input":"The conclusion gestures toward important implications, but it would be stronger if those implications were stated in more direct and concrete terms."}
+{"id":"simplify_010","task":"simplify","input":"Your discussion of the author’s position is accurate in broad terms, though some of the finer distinctions could be presented more straightforwardly."}
+{"id":"simplify_011","task":"simplify","input":"There is a thoughtful interpretive move here, but the surrounding language is dense enough that readers may miss the significance of your point."}
+{"id":"simplify_012","task":"simplify","input":"In its current form, the paragraph contains several overlapping claims that would be easier to understand if separated into shorter, more focused sentences."}
+{"id":"simplify_013","task":"simplify","input":"The paper would benefit from a more concise explanation of the methodology you used to arrive at this conclusion."}
+{"id":"simplify_014","task":"simplify","input":"Your analysis of the data is potentially compelling, but the technical terminology may need to be explained more accessibly for a general academic audience."}
+{"id":"simplify_015","task":"simplify","input":"This sentence attempts to communicate multiple ideas simultaneously, which reduces clarity and weakens the force of the claim."}
+{"id":"simplify_016","task":"simplify","input":"You raise an important counterargument here, though its presentation could be streamlined so that its relationship to your main thesis is easier to recognize."}
+{"id":"simplify_017","task":"simplify","input":"At several points, the prose becomes abstract to the extent that the practical meaning of your argument is difficult to determine."}
+{"id":"simplify_018","task":"simplify","input":"This paragraph includes useful content, but the repetition of similar phrases makes the writing more cumbersome than it needs to be."}
+{"id":"simplify_019","task":"simplify","input":"The claim is interesting, yet the qualifying language surrounding it is so extensive that the sentence loses momentum."}
+{"id":"simplify_020","task":"simplify","input":"Your explanation of the historical context is informative, although it could be made more concise without losing essential detail."}
+{"id":"simplify_021","task":"simplify","input":"This portion of the essay would be easier to follow if the key term were defined in plain language before being used repeatedly."}
+{"id":"simplify_022","task":"simplify","input":"The overall point is sound, but the sentence structure is sufficiently intricate that readers may need to reread it several times."}
+{"id":"simplify_023","task":"simplify","input":"You are engaging with the material in a serious way, though the phrasing sometimes gives the impression of complexity without adding precision."}
+{"id":"simplify_024","task":"simplify","input":"The reader would likely benefit from a more direct statement of how this example connects to your broader argument."}
+{"id":"simplify_025","task":"simplify","input":"This passage contains strong ideas, but the elevated diction makes the meaning less immediately accessible."}
+{"id":"simplify_026","task":"simplify","input":"Your interpretation is plausible, though it would be strengthened by being expressed in shorter and more concrete sentences."}
+{"id":"simplify_027","task":"simplify","input":"The sequence of ideas here is not impossible to follow, but it requires more effort from the reader than necessary."}
+{"id":"simplify_028","task":"simplify","input":"This analysis could be improved by reducing the amount of hedging language and stating the claim more plainly."}
+{"id":"simplify_029","task":"simplify","input":"The paragraph demonstrates understanding, but it relies on academic jargon in places where simpler wording would be more effective."}
+{"id":"simplify_030","task":"simplify","input":"Your comparison between the two authors is insightful, although the explanation is buried under overly elaborate sentence construction."}
+{"id":"simplify_031","task":"simplify","input":"The evidence is relevant, but the connection between the quotation and your interpretation should be spelled out more clearly."}
+{"id":"simplify_032","task":"simplify","input":"This section would read more smoothly if the long introductory phrase were shortened and the main verb appeared earlier."}
+{"id":"simplify_033","task":"simplify","input":"The response shows promise, but the accumulation of abstract nouns makes the prose feel heavier than necessary."}
+{"id":"simplify_034","task":"simplify","input":"Although the argument is intellectually ambitious, it currently sacrifices clarity in pursuit of sophistication."}
+{"id":"simplify_035","task":"simplify","input":"The reader can infer your meaning here, but a more explicit and straightforward phrasing would improve comprehension."}
+{"id":"simplify_036","task":"simplify","input":"This sentence could be made significantly clearer by replacing formal wording with simpler, more direct vocabulary."}
+{"id":"simplify_037","task":"simplify","input":"The conceptual point is valuable, yet the explanation becomes difficult to track because of its layered structure."}
+{"id":"simplify_038","task":"simplify","input":"A clearer distinction between cause and effect would make this part of the discussion easier to understand."}
+{"id":"simplify_039","task":"simplify","input":"The paragraph includes multiple worthwhile observations, but they should be organized in a more linear and readable way."}
+{"id":"simplify_040","task":"simplify","input":"Your phrasing here is precise, though probably more technical than necessary for the purpose of this assignment."}
+{"id":"simplify_041","task":"simplify","input":"This would be easier to follow if the sentence were divided into two parts and each part focused on one claim."}
+{"id":"simplify_042","task":"simplify","input":"The analytical insight is present, but the prose would benefit from greater simplicity and directness."}
+{"id":"simplify_043","task":"simplify","input":"At the moment, your explanation depends on terminology that may not be immediately familiar to all readers."}
+{"id":"simplify_044","task":"simplify","input":"The main idea emerges eventually, but it should be introduced earlier and in more accessible language."}
+{"id":"simplify_045","task":"simplify","input":"This point is important, but it is currently expressed in a way that feels more complicated than the idea itself."}
+{"id":"simplify_046","task":"simplify","input":"The sentence contains valuable detail, though the number of modifying phrases makes it harder to process."}
+{"id":"simplify_047","task":"simplify","input":"Your commentary is thoughtful, yet it would likely be stronger if written in a more concise and reader-friendly style."}
+{"id":"simplify_048","task":"simplify","input":"This explanation could be improved by choosing concrete examples over abstract generalizations."}
+{"id":"simplify_049","task":"simplify","input":"The discussion is relevant, but the current wording makes the relationship among the ideas less clear than it could be."}
+{"id":"simplify_050","task":"simplify","input":"You are making a solid point here, but a simpler sentence structure would help that point stand out more effectively."}

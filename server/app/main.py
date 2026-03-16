@@ -14,6 +14,7 @@ from app.mongodb import (
     feedback_records_collection,
     database
 )
+import time
 from bson import ObjectId
 from auth import router as auth_router
 from fastapi.middleware.cors import CORSMiddleware
@@ -230,7 +231,8 @@ async def interpret(req: dict):
             "created_at": datetime.utcnow()
         }
         
-        await feedback_records_collection.insert_one(record)
+        # TODO: Undo this. Debugging
+        # await feedback_records_collection.insert_one(record)
         
         return {"output": output}
 

@@ -1,4 +1,8 @@
 runs:
+  # =========================
+  # Existing Llama baselines
+  # =========================
+
   # Llama 3.1 8B - fast
   - name: groq_llama31_8b_t00
     provider: groq
@@ -22,5 +26,81 @@ runs:
   - name: groq_llama33_70b_t03
     provider: groq
     model: llama-3.3-70b-versatile
+    temperature: 0.3
+    max_tokens: 512
+
+  # =========================
+  # OpenAI GPT-OSS on Groq
+  # =========================
+
+  - name: groq_gptoss_20b_t00
+    provider: groq
+    model: openai/gpt-oss-20b
+    temperature: 0.0
+    max_tokens: 512
+
+  - name: groq_gptoss_20b_t03
+    provider: groq
+    model: openai/gpt-oss-20b
+    temperature: 0.3
+    max_tokens: 512
+
+  - name: groq_gptoss_120b_t00
+    provider: groq
+    model: openai/gpt-oss-120b
+    temperature: 0.0
+    max_tokens: 512
+
+  - name: groq_gptoss_120b_t03
+    provider: groq
+    model: openai/gpt-oss-120b
+    temperature: 0.3
+    max_tokens: 512
+
+  # =========================
+  # Qwen
+  # =========================
+
+  - name: groq_qwen3_32b_t00
+    provider: groq
+    model: qwen/qwen3-32b
+    temperature: 0.0
+    max_tokens: 512
+
+  - name: groq_qwen3_32b_t03
+    provider: groq
+    model: qwen/qwen3-32b
+    temperature: 0.3
+    max_tokens: 512
+
+  # =========================
+  # Llama 4 preview
+  # =========================
+
+  - name: groq_llama4_scout_t00
+    provider: groq
+    model: meta-llama/llama-4-scout-17b-16e-instruct
+    temperature: 0.0
+    max_tokens: 512
+
+  - name: groq_llama4_scout_t03
+    provider: groq
+    model: meta-llama/llama-4-scout-17b-16e-instruct
+    temperature: 0.3
+    max_tokens: 512
+
+  # =========================
+  # Kimi preview
+  # =========================
+
+  - name: groq_kimi_k2_t00
+    provider: groq
+    model: moonshotai/kimi-k2-instruct-0905
+    temperature: 0.0
+    max_tokens: 512
+
+  - name: groq_kimi_k2_t03
+    provider: groq
+    model: moonshotai/kimi-k2-instruct-0905
     temperature: 0.3
     max_tokens: 512
