@@ -237,8 +237,8 @@ async def interpret(req: dict):
             "created_at": datetime.utcnow()
         }
         
-        # TODO: Undo this. Debugging
-        # await feedback_records_collection.insert_one(record)
+        
+        await feedback_records_collection.insert_one(record)
         
         return {"output": output}
 
