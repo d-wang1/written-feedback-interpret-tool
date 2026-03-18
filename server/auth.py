@@ -28,6 +28,7 @@ class UserSignup(BaseModel):
     email: str
     password: str
     full_name: Optional[str] = None
+    submission_id: Optional[str] = None
     remember_me: Optional[bool] = False
 
 class Token(BaseModel):
@@ -55,6 +56,7 @@ async def signup(user_data: UserSignup):
         "email": user_data.email,
         "password": hashed_password,
         "full_name": user_data.full_name,
+        "submission_id": user_data.submission_id,
         "created_at": datetime.utcnow(),
         "updated_at": datetime.utcnow()
     }

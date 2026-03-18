@@ -7,6 +7,7 @@ export default function Signup() {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
+    submission_id: '',
     rememberMe: false
   })
   const [isLoading, setIsLoading] = useState(false)
@@ -35,6 +36,7 @@ export default function Signup() {
           email: formData.email,
           password: formData.password,
           full_name: '',
+          submission_id: formData.submission_id,
           remember_me: formData.rememberMe
         })
       })
@@ -129,6 +131,21 @@ export default function Signup() {
                 value={formData.password}
                 onChange={handleChange}
                 required
+              />
+            </div>
+
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel} htmlFor="submission_id">
+                Submission ID (Optional)
+              </label>
+              <input
+                type="text"
+                id="submission_id"
+                name="submission_id"
+                className={styles.formInput}
+                placeholder="Enter your submission ID"
+                value={formData.submission_id}
+                onChange={handleChange}
               />
             </div>
 

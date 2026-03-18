@@ -94,6 +94,9 @@ export default function Users() {
                   {user.full_name && (
                     <p><strong>Name:</strong> {user.full_name}</p>
                   )}
+                  {user.submission_id && (
+                    <p><strong>Submission ID:</strong> {user.submission_id}</p>
+                  )}
                   <p><strong>Last Updated:</strong> {formatDate(user.updated_at)}</p>
                 </div>
               </div>
