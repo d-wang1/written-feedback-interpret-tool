@@ -183,6 +183,10 @@ def health():
 async def interpret(req: dict):
     text = req.get("text", "")
     options = req.get("options", {})
+    user_info = req.get("user_info", {})  # Get user information
+    
+    print(f"Received user_info: {user_info}")
+    print(f"User email: {user_info.get('email', 'Guest')}")
     
     if not text.strip():
         raise HTTPException(status_code=400, detail="Input text is empty")
@@ -234,11 +238,16 @@ async def interpret(req: dict):
             "output_text": output,
             "input_length": input_length,
             "output_length": output_length,
+            "user_email": user_info.get("email", "Guest"),
+            "user_id": user_info.get("id", None),
             "created_at": datetime.utcnow()
         }
         
+        print(f"Creating record with user_email: {record['user_email']}")
+        print(f"Full record: {record}")
         
         await feedback_records_collection.insert_one(record)
+        print("Record inserted successfully")
         
         return {"output": output}
 
@@ -263,6 +272,8 @@ async def get_feedback_records():
             "output_text": document["output_text"],
             "input_length": document.get("input_length", 0),
             "output_length": document.get("output_length", 0),
+            "user_email": document.get("user_email", "Guest"),
+            "user_id": document.get("user_id"),
             "created_at": document["created_at"].isoformat()
         })
     

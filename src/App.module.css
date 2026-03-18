@@ -1221,6 +1221,30 @@
   gap: 0.5rem;
 }
 
+/* Log user information styles */
+.logUserInfo {
+  background: rgba(102, 126, 234, 0.1);
+  border: 1px solid rgba(102, 126, 234, 0.3);
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.logUserInfo h4 {
+  color: #667eea;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin: 0 0 0.25rem 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.logUser {
+  color: #333;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
 .mobileLogoutButton {
   display: flex;
   align-items: center;

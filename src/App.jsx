@@ -36,15 +36,35 @@ function HomePage() {
     
     const userId = user?.id || null  // Use user from the top level
     
+    console.log('=== FEEDBACK GENERATION DEBUG ===')
+    console.log('Current user state:', user)
+    console.log('User ID:', userId)
+    console.log('User email:', user?.email)
+    console.log('Is authenticated:', !!user)
+    
+    const userInfoToSend = user ? {
+      id: user.id,
+      email: user.email
+    } : {}
+    
+    console.log('Sending user_info:', userInfoToSend)
+    
+    const requestBody = {
+      text: inputText,
+      options,
+      user_info: userInfoToSend
+    }
+    
+    console.log('Full request body:', JSON.stringify(requestBody, null, 2))
+    
     const res = await fetch("/api/interpret", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        text: inputText,
-        options,
-        user_id: userId  // Send user ID if available
-      }),
+      body: JSON.stringify(requestBody),
     })
+    
+    console.log('Response status:', res.status)
+    console.log('Response headers:', res.headers)
 
     const data = await res.json()
     setIsLoading(false)

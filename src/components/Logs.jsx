@@ -14,17 +14,19 @@ export default function Logs() {
   const fetchLogs = async () => {
     try {
       setLoading(true)
-      const response = await fetch('/api/feedback-records')
-      
-      if (!response.ok) {
-        throw new Error('Failed to fetch logs')
+      const response = await fetch('http://localhost:8000/api/feedback-records')
+      if (response.ok) {
+        const data = await response.json()
+        console.log('=== LOGS DEBUG ===')
+        console.log('Raw logs data:', data)
+        console.log('First log entry:', data[0])
+        console.log('First log user_email:', data[0]?.user_email)
+        setLogs(data)
+      } else {
+        setError('Failed to fetch logs')
       }
-      
-      const data = await response.json()
-     // console.log("Here's the logs", data)
-      setLogs(data || [])
     } catch (err) {
-      setError(err.message)
+      setError('Network error. Please check your connection.')
     } finally {
       setLoading(false)
     }
@@ -47,7 +49,7 @@ export default function Logs() {
   }
 
   const formatOptions = (options) => {
-    console.log("heres the OPTIONS:", options)
+    //console.log("heres the OPTIONS:", options)
     if (!options) return 'None'
     const selected = []
     if (options === "simplify") selected.push('Simplify')
@@ -110,12 +112,22 @@ export default function Logs() {
             </div>
             
             <div className={styles.logsGrid}>
-              {logs.map((log, index) => (
+              {logs.map((log, index) => {
+                console.log(`Rendering log ${index}:`, log)
+                console.log(`User email for log ${index}:`, log.user_email)
+                return (
                 <div key={log._id || index} className={styles.logCard}>
                   <div className={styles.logHeader}>
                     <div className={styles.logIndex}>#{index + 1}</div>
                     <div className={styles.logDate}>
                        {formatDate(log.created_at)}
+                    </div>
+                  </div>
+                  
+                  <div className={styles.logUserInfo}>
+                    <h4>User</h4>
+                    <div className={styles.logUser}>
+                      {log.user_email || 'Guest'}
                     </div>
                   </div>
                   
@@ -142,7 +154,8 @@ export default function Logs() {
                     </div>
                   </div>
                 </div>
-              ))}
+                )
+              })}
             </div>
           </div>
         )}
