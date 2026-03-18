@@ -185,26 +185,16 @@ async def interpret(req: dict):
     options = req.get("options", {})
     user_info = req.get("user_info", {})  # Get user information
     
-    print(f"Received user_info: {user_info}")
-    print(f"User email: {user_info.get('email', 'Guest')}")
-    
     # If user is logged in, fetch their submission_id from database
     user_submission_id = None
     if user_info.get("email") and user_info.get("email") != "Guest":
         try:
             db = await get_database()
-            print(f"Looking up user with email: {user_info['email']}")
             user_record = await db.users.find_one({"email": user_info["email"]})
-            print(f"User record found: {user_record}")
             if user_record:
                 user_submission_id = user_record.get("submission_id")
-                print(f"Found user submission_id: {user_submission_id}")
-            else:
-                print("No user record found!")
         except Exception as e:
             print(f"Error fetching user submission_id: {e}")
-    else:
-        print("User is guest or no email provided")
     
     if not text.strip():
         raise HTTPException(status_code=400, detail="Input text is empty")
@@ -262,23 +252,7 @@ async def interpret(req: dict):
             "created_at": datetime.utcnow()
         }
         
-        print(f"Creating record with user_email: {record['user_email']}")
-        print(f"Creating record with submission_id: {record['submission_id']}")
-        print(f"Full record: {record}")
-        
-        # Verify record has submission_id before inserting
-        if 'submission_id' in record and record['submission_id']:
-            print("✅ Record HAS submission_id field")
-        else:
-            print("❌ Record MISSING submission_id field")
-        
-        result = await feedback_records_collection.insert_one(record)
-        print(f"Insert result: {result}")
-        
-        # Verify insertion by fetching the record back
-        inserted_record = await feedback_records_collection.find_one({"_id": result.inserted_id})
-        print(f"Inserted record from DB: {inserted_record}")
-        print(f"Inserted record submission_id: {inserted_record.get('submission_id', 'NOT FOUND')}")
+        await feedback_records_collection.insert_one(record)
         
         return {"output": output}
 

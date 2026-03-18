@@ -17,10 +17,6 @@ export default function Logs() {
       const response = await fetch('http://localhost:8000/api/feedback-records')
       if (response.ok) {
         const data = await response.json()
-        console.log('=== LOGS DEBUG ===')
-        console.log('Raw logs data:', data)
-        console.log('First log entry:', data[0])
-        console.log('First log user_email:', data[0]?.user_email)
         setLogs(data)
       } else {
         setError('Failed to fetch logs')
@@ -112,10 +108,7 @@ export default function Logs() {
             </div>
             
             <div className={styles.logsGrid}>
-              {logs.map((log, index) => {
-                console.log(`Rendering log ${index}:`, log)
-                console.log(`User email for log ${index}:`, log.user_email)
-                return (
+              {logs.map((log, index) => (
                 <div key={log._id || index} className={styles.logCard}>
                   <div className={styles.logHeader}>
                     <div className={styles.logIndex}>#{index + 1}</div>
