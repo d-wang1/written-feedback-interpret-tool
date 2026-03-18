@@ -156,8 +156,7 @@ export default function Logs() {
                     </div>
                   </div>
                 </div>
-                )
-              })}
+              ))}
             </div>
           </div>
         )}
