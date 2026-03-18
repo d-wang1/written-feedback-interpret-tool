@@ -131,6 +131,15 @@ export default function Logs() {
                     </div>
                   </div>
                   
+                  {log.submission_id && (
+                    <div className={styles.logUserInfo}>
+                      <h4>Submission ID</h4>
+                      <div className={styles.logUser}>
+                        {log.submission_id}
+                      </div>
+                    </div>
+                  )}
+                  
                   <div className={styles.logContent}>
                     <div className={styles.logSection}>
                       <h4>Original Feedback</h4>

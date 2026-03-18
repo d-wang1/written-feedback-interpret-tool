@@ -11,6 +11,7 @@ import Login from './components/Login'
 import Signup from './components/Signup'
 import Logs from './components/Logs'
 import Users from './components/Users'
+import Profile from './components/Profile'
 import { AuthProvider, useAuth } from './contexts/AuthContext'
 import styles from './App.module.css'
 
@@ -127,6 +128,7 @@ export default function App() {
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/logs" element={<Logs />} />
                     <Route path="/users" element={<Users />} />
+                    <Route path="/profile" element={<Profile />} />
                   </Routes>
                 </main>
                 <Footer />

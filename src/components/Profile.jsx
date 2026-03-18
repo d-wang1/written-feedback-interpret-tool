@@ -114,7 +114,7 @@ export default function Profile() {
             <div className={styles.logsHeader}>
               <h2>Your Feedback History ({feedbacks.length})</h2>
               <button className={styles.refreshButton} onClick={fetchUserFeedbacks}>
-                 🔄 Refresh
+                  Refresh
               </button>
             </div>
             
@@ -127,6 +127,22 @@ export default function Profile() {
                        {formatDate(feedback.created_at)}
                     </div>
                   </div>
+                  
+                  <div className={styles.logUserInfo}>
+                    <h4>User</h4>
+                    <div className={styles.logUser}>
+                      {feedback.user_email || 'Guest'}
+                    </div>
+                  </div>
+                  
+                  {feedback.submission_id && (
+                    <div className={styles.logUserInfo}>
+                      <h4>Submission ID</h4>
+                      <div className={styles.logUser}>
+                        {feedback.submission_id}
+                      </div>
+                    </div>
+                  )}
                   
                   <div className={styles.logContent}>
                     <div className={styles.logSection}>
