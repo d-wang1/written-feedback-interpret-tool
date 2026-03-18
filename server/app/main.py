@@ -188,6 +188,24 @@ async def interpret(req: dict):
     print(f"Received user_info: {user_info}")
     print(f"User email: {user_info.get('email', 'Guest')}")
     
+    # If user is logged in, fetch their submission_id from database
+    user_submission_id = None
+    if user_info.get("email") and user_info.get("email") != "Guest":
+        try:
+            db = await get_database()
+            print(f"Looking up user with email: {user_info['email']}")
+            user_record = await db.users.find_one({"email": user_info["email"]})
+            print(f"User record found: {user_record}")
+            if user_record:
+                user_submission_id = user_record.get("submission_id")
+                print(f"Found user submission_id: {user_submission_id}")
+            else:
+                print("No user record found!")
+        except Exception as e:
+            print(f"Error fetching user submission_id: {e}")
+    else:
+        print("User is guest or no email provided")
+    
     if not text.strip():
         raise HTTPException(status_code=400, detail="Input text is empty")
 
@@ -240,14 +258,27 @@ async def interpret(req: dict):
             "output_length": output_length,
             "user_email": user_info.get("email", "Guest"),
             "user_id": user_info.get("id", None),
+            "submission_id": user_submission_id,
             "created_at": datetime.utcnow()
         }
         
         print(f"Creating record with user_email: {record['user_email']}")
+        print(f"Creating record with submission_id: {record['submission_id']}")
         print(f"Full record: {record}")
         
-        await feedback_records_collection.insert_one(record)
-        print("Record inserted successfully")
+        # Verify record has submission_id before inserting
+        if 'submission_id' in record and record['submission_id']:
+            print("✅ Record HAS submission_id field")
+        else:
+            print("❌ Record MISSING submission_id field")
+        
+        result = await feedback_records_collection.insert_one(record)
+        print(f"Insert result: {result}")
+        
+        # Verify insertion by fetching the record back
+        inserted_record = await feedback_records_collection.find_one({"_id": result.inserted_id})
+        print(f"Inserted record from DB: {inserted_record}")
+        print(f"Inserted record submission_id: {inserted_record.get('submission_id', 'NOT FOUND')}")
         
         return {"output": output}
 
@@ -274,7 +305,30 @@ async def get_feedback_records():
             "output_length": document.get("output_length", 0),
             "user_email": document.get("user_email", "Guest"),
             "user_id": document.get("user_id"),
+            "submission_id": document.get("submission_id"),
             "created_at": document["created_at"].isoformat()
         })
     
     return records
+
+@app.delete("/api/feedback-records/{record_id}")
+async def delete_feedback_record(record_id: str):
+    """Delete a specific feedback record"""
+    try:
+        from bson import ObjectId
+        object_id = ObjectId(record_id)
+    except:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid record ID format"
+        )
+    
+    result = await feedback_records_collection.delete_one({"_id": object_id})
+    
+    if result.deleted_count == 0:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Feedback record not found"
+        )
+    
+    return {"message": f"Feedback record {record_id} deleted successfully"}
