@@ -1,25 +1,35 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../contexts/AuthContext'
 import styles from '../App.module.css'
 
-export default function Logs() {
-  const [logs, setLogs] = useState([])
+export default function Profile() {
+  const [feedbacks, setFeedbacks] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const { user } = useAuth()
+  const navigate = useNavigate()
 
   useEffect(() => {
-    fetchLogs()
-    
-  }, [])
+    if (!user) {
+      navigate('/login')
+      return
+    }
+    fetchUserFeedbacks()
+  }, [user, navigate])
 
-  const fetchLogs = async () => {
+  const fetchUserFeedbacks = async () => {
     try {
-      setLoading(true)
       const response = await fetch('http://localhost:8000/api/feedback-records')
       if (response.ok) {
         const data = await response.json()
-        setLogs(data)
+        // Filter feedbacks for current user
+        const userFeedbacks = data.filter(feedback => 
+          feedback.user_email === user.email
+        )
+        setFeedbacks(userFeedbacks)
       } else {
-        setError('Failed to fetch logs')
+        setError('Failed to fetch feedback records')
       }
     } catch (err) {
       setError('Network error. Please check your connection.')
@@ -30,39 +40,32 @@ export default function Logs() {
 
   const formatDate = (dateString) => {
     if (!dateString) return 'N/A'
-    
-    const date = new Date(dateString)
-    const options = {
+    return new Date(dateString).toLocaleDateString('en-US', {
       year: 'numeric',
-      month: 'long',
+      month: 'short',
       day: 'numeric',
-      hour: 'numeric',
+      hour: '2-digit',
       minute: '2-digit',
-      hour12: true
-    }
-    
-    return date.toLocaleString('en-US', options)
+      timeZone: 'America/New_York',
+      timeZoneName: 'short'
+    })
   }
 
   const formatOptions = (options) => {
-    //console.log("heres the OPTIONS:", options)
     if (!options) return 'None'
     const selected = []
     if (options === "simplify") selected.push('Simplify')
-    if (options ==="soften") selected.push('Soften')
+    if (options === "soften") selected.push('Soften')
     if (options === "caseSupport") selected.push('Case Support')
-    return selected.length > 0 ? selected.join(', ') : 'None'
+    return selected.join(', ') || 'None'
   }
 
   if (loading) {
     return (
-      <div className={styles.pageContainer}>
-        <div className={styles.pageContent}>
-          <h1 className={styles.pageTitle}>Feedback Logs</h1>
-          <div className={styles.loadingContainer}>
-            <div className={styles.loadingSpinner}></div>
-            <p>Loading feedback records...</p>
-          </div>
+      <div className={styles.container}>
+        <div className={styles.loadingContainer}>
+          <div className={styles.spinner}></div>
+          <p>Loading your feedback history...</p>
         </div>
       </div>
     )
@@ -70,65 +73,73 @@ export default function Logs() {
 
   if (error) {
     return (
-      <div className={styles.pageContainer}>
-        <div className={styles.pageContent}>
-          <h1 className={styles.pageTitle}>Feedback Logs</h1>
-          <div className={styles.errorContainer}>
-            <p className={styles.errorMessage}>Error: {error}</p>
-            <button className={styles.retryButton} onClick={fetchLogs}>
-              Retry
-            </button>
-          </div>
+      <div className={styles.container}>
+        <div className={styles.errorContainer}>
+          <p>{error}</p>
+          <button onClick={fetchUserFeedbacks} className={styles.buttonPrimary}>
+            Try Again
+          </button>
         </div>
       </div>
     )
   }
 
   return (
-    <div className={styles.pageContainer}>
+    <div className={styles.container}>
       <div className={styles.pageContent}>
-        <h1 className={styles.pageTitle}>Feedback Logs</h1>
-        <p className={styles.pageDescription}>
-          View all feedback interpretation records and their results.
-        </p>
+        <div className={styles.profileHeader}>
+          <h1 className={styles.pageTitle}>My Profile</h1>
+          <div className={styles.profileInfo}>
+            <h2 className={styles.profileEmail}>{user.email}</h2>
+            <p className={styles.profileStats}>
+              You have generated {feedbacks.length} feedback{feedbacks.length !== 1 ? 's' : ''}
+            </p>
+          </div>
+        </div>
 
-        {logs.length === 0 ? (
+        {feedbacks.length === 0 ? (
           <div className={styles.emptyState}>
-            <div className={styles.emptyIcon}>📋</div>
-            <h3>No feedback records found</h3>
-            <p>No feedback has been processed yet. Start by submitting some feedback!</p>
+            <div className={styles.emptyIcon}>📝</div>
+            <h3>No Feedback History</h3>
+            <p>You haven't generated any feedback yet. Start by submitting some feedback on the home page!</p>
+            <button 
+              className={styles.buttonPrimary}
+              onClick={() => navigate('/')}
+            >
+              Generate Feedback
+            </button>
           </div>
         ) : (
           <div className={styles.logsContainer}>
             <div className={styles.logsHeader}>
-              <h2>Recent Feedback Records ({logs.length})</h2>
-              <button className={styles.refreshButton} onClick={fetchLogs}>
-                 Refresh
+              <h2>Your Feedback History ({feedbacks.length})</h2>
+              <button className={styles.refreshButton} onClick={fetchUserFeedbacks}>
+                  Refresh
               </button>
             </div>
             
             <div className={styles.logsGrid}>
-              {logs.map((log, index) => (
-                <div key={log._id || index} className={styles.logCard}>
+              {feedbacks.map((feedback, index) => (
+                <div key={feedback.id || index} className={styles.logCard}>
                   <div className={styles.logHeader}>
                     <div className={styles.logIndex}>#{index + 1}</div>
                     <div className={styles.logDate}>
-                       {formatDate(log.created_at)}
+                       {formatDate(feedback.created_at)}
                     </div>
                   </div>
                   
                   <div className={styles.logUserInfo}>
                     <h4>User</h4>
                     <div className={styles.logUser}>
-                      {log.user_email || 'Guest'}
+                      {feedback.user_email || 'Guest'}
                     </div>
                   </div>
                   
-                  {log.submission_id && (
+                  {feedback.submission_id && (
                     <div className={styles.logUserInfo}>
                       <h4>Submission ID</h4>
                       <div className={styles.logUser}>
-                        {log.submission_id}
+                        {feedback.submission_id}
                       </div>
                     </div>
                   )}
@@ -137,21 +148,21 @@ export default function Logs() {
                     <div className={styles.logSection}>
                       <h4>Original Feedback</h4>
                       <div className={styles.logText}>
-                        {log.input_text || 'No input text'}
+                        {feedback.input_text || 'No input text'}
                       </div>
                     </div>
                     
                     <div className={styles.logSection}>
                       <h4>Options Used</h4>
                       <div className={styles.logOptions}>
-                        {formatOptions(log.methods[0])}
+                        {formatOptions(feedback.methods[0])}
                       </div>
                     </div>
                     
                     <div className={styles.logSection}>
                       <h4>Generated Output</h4>
                       <div className={styles.logText}>
-                        {log.output_text || 'No output generated'}
+                        {feedback.output_text || 'No output generated'}
                       </div>
                     </div>
                   </div>
