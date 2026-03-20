@@ -35,3 +35,4 @@ The LLM provider can be easily exchanged in `server/app/main.py` based on need a
 2. Change in Python dependencies / renaming files
    If dependencies or file names ever change, rebuild using `docker compose build --no-cache` then `docker compose up`.
    We can also run the server using `docker-compose up -d` and stop it by using `docker-compose down`.
+3. After we deployed the server, we need to change all the occurrance of localhost to the external IP of the deploted server.
