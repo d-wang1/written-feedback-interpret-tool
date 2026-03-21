@@ -44,7 +44,8 @@ export default function Login() {
         // Use AuthContext login function to update state
         login({
           id: data.user_id,
-          email: formData.email
+          email: formData.email,
+          role: data.role || 'user'
         }, data.access_token)
         
         // Redirect to dashboard or home

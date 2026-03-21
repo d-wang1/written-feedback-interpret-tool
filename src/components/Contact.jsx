@@ -11,7 +11,7 @@ export default function Contact() {
         
         <div className={styles.contactGrid}>
           <div className={styles.contactCard}>
-            <h3>📧 Email</h3>
+            <h3>Emails</h3>
             <p>Yang: yl4367@cornell.edu</p>
             <p>Jiarui: jz2495@cornell.edu</p>
             <p>David: dw682@cornell.edu</p>

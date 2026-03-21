@@ -29,12 +29,14 @@ class UserSignup(BaseModel):
     password: str
     full_name: Optional[str] = None
     submission_id: Optional[str] = None
+    role: Optional[str] = "user"  # Default role is "user"
     remember_me: Optional[bool] = False
 
 class Token(BaseModel):
     access_token: str
     token_type: str
     user_id: str
+    role: Optional[str] = "user"
 
 @router.post("/signup", response_model=Token)
 async def signup(user_data: UserSignup):
@@ -57,6 +59,7 @@ async def signup(user_data: UserSignup):
         "password": hashed_password,
         "full_name": user_data.full_name,
         "submission_id": user_data.submission_id,
+        "role": user_data.role or "user",  # Store role or default to "user"
         "created_at": datetime.utcnow(),
         "updated_at": datetime.utcnow()
     }
@@ -71,7 +74,7 @@ async def signup(user_data: UserSignup):
         expires_delta=access_token_expires
     )
     
-    return Token(access_token=access_token, token_type="bearer", user_id=user_id)
+    return Token(access_token=access_token, token_type="bearer", user_id=user_id, role=user_data.role or "user")
 
 @router.post("/login", response_model=Token)
 async def login(user_data: UserLogin):
@@ -92,7 +95,7 @@ async def login(user_data: UserLogin):
         expires_delta=access_token_expires
     )
     
-    return Token(access_token=access_token, token_type="bearer", user_id=str(user["_id"]))
+    return Token(access_token=access_token, token_type="bearer", user_id=str(user["_id"]), role=user.get("role", "user"))
 
 def create_access_token(data: dict, expires_delta: timedelta):
     to_encode = data.copy()

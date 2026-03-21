@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react'
+import { useAuth } from '../contexts/AuthContext'
 import styles from '../App.module.css'
 
 export default function Logs() {
   const [logs, setLogs] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const { user } = useAuth()
 
   useEffect(() => {
     fetchLogs()
-    
   }, [])
 
   const fetchLogs = async () => {
@@ -28,9 +29,47 @@ export default function Logs() {
     }
   }
 
+  const deleteLog = async (logId) => {
+    if (!window.confirm('Are you sure you want to delete this log?')) {
+      return
+    }
+    
+    try {
+      const response = await fetch(`http://localhost:8000/api/feedback-records/${logId}`, {
+        method: 'DELETE'
+      })
+      
+      if (response.ok) {
+        setLogs(logs.filter(log => log.id !== logId))
+      } else {
+        alert('Failed to delete log')
+      }
+    } catch (err) {
+      alert('Error deleting log')
+    }
+  }
+
+  const deleteAllLogs = async () => {
+    if (!window.confirm('Are you sure you want to delete ALL logs? This action cannot be undone!')) {
+      return
+    }
+    
+    try {
+      const deletePromises = logs.map(log => 
+        fetch(`http://localhost:8000/api/feedback-records/${log.id}`, {
+          method: 'DELETE'
+        })
+      )
+      
+      await Promise.all(deletePromises)
+      setLogs([])
+    } catch (err) {
+      alert('Error deleting logs')
+    }
+  }
+
   const formatDate = (dateString) => {
     if (!dateString) return 'N/A'
-    
     const date = new Date(dateString)
     const options = {
       year: 'numeric',
@@ -45,14 +84,15 @@ export default function Logs() {
   }
 
   const formatOptions = (options) => {
-    //console.log("heres the OPTIONS:", options)
     if (!options) return 'None'
     const selected = []
     if (options === "simplify") selected.push('Simplify')
-    if (options ==="soften") selected.push('Soften')
+    if (options === "soften") selected.push('Soften')
     if (options === "caseSupport") selected.push('Case Support')
     return selected.length > 0 ? selected.join(', ') : 'None'
   }
+
+  const isAdmin = user && user.role === 'admin'
 
   if (loading) {
     return (
@@ -92,23 +132,33 @@ export default function Logs() {
           View all feedback interpretation records and their results.
         </p>
 
-        {logs.length === 0 ? (
-          <div className={styles.emptyState}>
-            <div className={styles.emptyIcon}>📋</div>
-            <h3>No feedback records found</h3>
-            <p>No feedback has been processed yet. Start by submitting some feedback!</p>
-          </div>
-        ) : (
-          <div className={styles.logsContainer}>
+        <div className={styles.logsContainer}>
             <div className={styles.logsHeader}>
               <h2>Recent Feedback Records ({logs.length})</h2>
-              <button className={styles.refreshButton} onClick={fetchLogs}>
-                 Refresh
-              </button>
+              <div className={styles.headerActions}>
+                {isAdmin && (
+                  <button 
+                    onClick={deleteAllLogs}
+                    className={styles.deleteButton}
+                  >
+                    Delete All Logs
+                  </button>
+                )}
+                <button className={styles.refreshButton} onClick={fetchLogs}>
+                   Refresh
+                </button>
+              </div>
             </div>
             
-            <div className={styles.logsGrid}>
-              {logs.map((log, index) => (
+            {logs.length === 0 ? (
+              <div className={styles.emptyState}>
+                <div className={styles.emptyIcon}>📋</div>
+                <h3>No feedback records found</h3>
+                <p>No feedback has been processed yet. Start by submitting some feedback!</p>
+              </div>
+            ) : (
+              <div className={styles.logsGrid}>
+                {logs.map((log, index) => (
                 <div key={log._id || index} className={styles.logCard}>
                   <div className={styles.logHeader}>
                     <div className={styles.logIndex}>#{index + 1}</div>
@@ -130,6 +180,18 @@ export default function Logs() {
                       <div className={styles.logUser}>
                         {log.submission_id}
                       </div>
+                    </div>
+                  )}
+                  
+                  {isAdmin && (
+                    <div className={styles.logActions}>
+                      <button 
+                        onClick={() => deleteLog(log._id)}
+                        className={styles.deleteButton}
+                        title="Delete log"
+                      >
+                        🗑️ Delete
+                      </button>
                     </div>
                   )}
                   
@@ -158,6 +220,7 @@ export default function Logs() {
                 </div>
               ))}
             </div>
+            )}
           </div>
         )}
       </div>

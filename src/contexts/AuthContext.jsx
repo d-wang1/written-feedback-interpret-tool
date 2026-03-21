@@ -19,12 +19,14 @@ export function AuthProvider({ children }) {
     const savedToken = localStorage.getItem('access_token')
     const savedUserId = localStorage.getItem('user_id')
     const savedEmail = localStorage.getItem('user_email')
+    const savedRole = localStorage.getItem('user_role')
     
     if (savedToken && savedUserId) {
       setToken(savedToken)
       setUser({
         id: savedUserId,
-        email: savedEmail
+        email: savedEmail,
+        role: savedRole
       })
     }
   }, [])
@@ -37,6 +39,7 @@ export function AuthProvider({ children }) {
     localStorage.setItem('access_token', authToken)
     localStorage.setItem('user_id', userData.id)
     localStorage.setItem('user_email', userData.email)
+    localStorage.setItem('user_role', userData.role || 'user')
   }
 
   const logout = () => {
@@ -47,6 +50,7 @@ export function AuthProvider({ children }) {
     localStorage.removeItem('access_token')
     localStorage.removeItem('user_id')
     localStorage.removeItem('user_email')
+    localStorage.removeItem('user_role')
   }
 
   const value = {

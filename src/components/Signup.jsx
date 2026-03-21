@@ -54,7 +54,8 @@ export default function Signup() {
         
         login({
           id: data.user_id,
-          email: formData.email
+          email: formData.email,
+          role: data.role || 'user'
         }, data.access_token)
         
         console.log('Login function called, redirecting to home')
