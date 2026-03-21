@@ -180,7 +180,7 @@ export default function Users() {
                         className={styles.deleteButton}
                         title="Delete user"
                       >
-                        🗑️ Delete
+                        Delete
                       </button>
                     </div>
                   )}

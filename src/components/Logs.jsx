@@ -204,7 +204,7 @@ export default function Logs() {
                           className={styles.deleteButton}
                           title="Delete log"
                         >
-                          🗑️ Delete
+                           Delete
                         </button>
                       </div>
                     )}
