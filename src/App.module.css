@@ -1002,6 +1002,23 @@
   border-bottom: 2px solid #e2e8f0;
 }
 
+.userHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: flex-start;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.logHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
 .logsHeader h2 {
   color: #1e293b;
   font-size: 1.5rem;
@@ -1213,12 +1230,51 @@
 }
 
 .userInfo {
-  color: rgba(255, 255, 255, 0.9);
+  color: white;
   font-size: 0.875rem;
   margin-right: 1rem;
   display: flex;
   align-items: center;
   gap: 0.5rem;
+}
+
+.logUserInfoContent {
+  color: #1e293b;
+  font-size: 0.875rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.logUserInfoContent p {
+  margin: 0.25rem 0;
+  line-height: 1.2;
+}
+
+.logEmail {
+  color: #1e293b;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.logDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.logDetails p {
+  color: #374151;
+  font-size: 0.9rem;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.logDetails strong {
+  color: #1e293b;
+  font-weight: 600;
 }
 
 /* Log user information styles */
@@ -1234,15 +1290,17 @@
   color: #667eea;
   font-size: 0.75rem;
   font-weight: 600;
-  margin: 0 0 0.25rem 0;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  margin-bottom: 0.5rem;
 }
 
 .logUser {
-  color: #333;
+  color: #1e293b;
   font-size: 0.875rem;
   font-weight: 500;
+  margin: 0;
+  line-height: 1.4;
 }
 
 /* Profile page styles */

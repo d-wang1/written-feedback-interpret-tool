@@ -115,7 +115,9 @@ export default function Users() {
   return (
     <div className={styles.container}>
       <div className={styles.pageContent}>
-        <h1 className={styles.pageTitle}>Users</h1>
+        <h1 className={styles.pageTitle}>Users
+          
+        </h1>
         <p className={styles.pageDescription}>
           Manage user accounts and view system activity.
         </p>
@@ -148,7 +150,7 @@ export default function Users() {
               <div className={styles.logsGrid}>
                 {users.map((user) => (
                 <div key={user._id} className={styles.logCard}>
-                  <div className={styles.logHeader}>
+                  <div className={styles.userHeader}>
                     <h3 className={styles.logEmail}>{user.email}</h3>
                     {user.role === 'admin' && (
                       <span className={styles.adminBadge}>ADMIN</span>

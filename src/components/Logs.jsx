@@ -159,54 +159,34 @@ export default function Logs() {
             ) : (
               <div className={styles.logsGrid}>
                 {logs.map((log, index) => (
-                <div key={log._id || index} className={styles.logCard}>
-                  <div className={styles.logHeader}>
-                    <div className={styles.logIndex}>#{index + 1}</div>
-                    <div className={styles.logDate}>
-                       {formatDate(log.created_at)}
-                    </div>
-                  </div>
-                  
-                  <div className={styles.logUserInfo}>
-                    <h4>User</h4>
-                    <div className={styles.logUser}>
-                      {log.user_email || 'Guest'}
-                    </div>
-                  </div>
-                  
-                  {log.submission_id && (
-                    <div className={styles.logUserInfo}>
-                      <h4>Submission ID</h4>
-                      <div className={styles.logUser}>
-                        {log.submission_id}
+                  <div key={log.id || index} className={styles.logCard}>
+                    <div className={styles.logHeader}>
+                      <div className={styles.logIndex}>#{index + 1}</div>
+                      <div className={styles.logDate}>
+                         {formatDate(log.created_at)}
                       </div>
                     </div>
-                  )}
-                  
-                  {isAdmin && (
-                    <div className={styles.logActions}>
-                      <button 
-                        onClick={() => deleteLog(log._id)}
-                        className={styles.deleteButton}
-                        title="Delete log"
-                      >
-                        🗑️ Delete
-                      </button>
-                    </div>
-                  )}
-                  
-                  <div className={styles.logContent}>
-                    <div className={styles.logSection}>
-                      <h4>Original Feedback</h4>
-                      <div className={styles.logText}>
-                        {log.input_text || 'No input text'}
+                    
+                    <div className={styles.logUserInfo}>
+                      <h4>User</h4>
+                      <div className={styles.logUserInfoContent}>
+                        <p><strong>Email:</strong> {log.user_email || 'Guest'}</p>
+                        {log.user_id && <p><strong>User ID:</strong> {log.user_id}</p>}
+                        {log.submission_id && <p><strong>Submission ID:</strong> {log.submission_id}</p>}
                       </div>
                     </div>
                     
                     <div className={styles.logSection}>
-                      <h4>Options Used</h4>
+                      <h4>Original Feedback</h4>
+                      <div className={styles.logText}>
+                        {log.input_text || 'No feedback provided'}
+                      </div>
+                    </div>
+                    
+                    <div className={styles.logSection}>
+                      <h4>Options</h4>
                       <div className={styles.logOptions}>
-                        {formatOptions(log.methods[0])}
+                        {formatOptions(log.options)}
                       </div>
                     </div>
                     
@@ -216,10 +196,21 @@ export default function Logs() {
                         {log.output_text || 'No output generated'}
                       </div>
                     </div>
+                    
+                    {isAdmin && (
+                      <div className={styles.logActions}>
+                        <button 
+                          onClick={() => deleteLog(log.id)}
+                          className={styles.deleteButton}
+                          title="Delete log"
+                        >
+                          🗑️ Delete
+                        </button>
+                      </div>
+                    )}
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
             )}
           </div>
         )}
