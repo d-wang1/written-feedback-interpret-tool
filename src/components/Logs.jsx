@@ -6,6 +6,7 @@ export default function Logs() {
   const [logs, setLogs] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const [searchTerm, setSearchTerm] = useState('')
   const { user } = useAuth()
 
   useEffect(() => {
@@ -67,6 +68,18 @@ export default function Logs() {
       alert('Error deleting logs')
     }
   }
+
+  // Filter logs based on search term
+  const filteredLogs = logs.filter(log => {
+    if (!searchTerm) return true
+    
+    const searchLower = searchTerm.toLowerCase()
+    return (
+      (log.input_text && log.input_text.toLowerCase().includes(searchLower)) ||
+      (log.user_email && log.user_email.toLowerCase().includes(searchLower)) ||
+      (log.output_text && log.output_text.toLowerCase().includes(searchLower))
+    )
+  })
 
   const formatDate = (dateString) => {
     if (!dateString) return 'N/A'
@@ -134,7 +147,7 @@ export default function Logs() {
 
         <div className={styles.logsContainer}>
             <div className={styles.logsHeader}>
-              <h2>Recent Feedback Records ({logs.length})</h2>
+              <h2>Recent Feedback Records ({filteredLogs.length})</h2>
               <div className={styles.headerActions}>
                 {isAdmin && (
                   <button 
@@ -149,16 +162,29 @@ export default function Logs() {
                 </button>
               </div>
             </div>
+
+            <div className={styles.searchContainer}>
+              <input
+                type="text"
+                placeholder="Search by feedback content or user email..."
+                className={styles.searchInput}
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+              <button className={styles.searchButton} onClick={() => setSearchTerm('')}>
+                Clear
+              </button>
+            </div>
             
-            {logs.length === 0 ? (
+            {filteredLogs.length === 0 ? (
               <div className={styles.emptyState}>
                 <div className={styles.emptyIcon}>📋</div>
                 <h3>No feedback records found</h3>
-                <p>No feedback has been processed yet. Start by submitting some feedback!</p>
+                <p>No feedback records match your search criteria.</p>
               </div>
             ) : (
               <div className={styles.logsGrid}>
-                {logs.map((log, index) => (
+                {filteredLogs.map((log, index) => (
                   <div key={log.id || index} className={styles.logCard}>
                     <div className={styles.logHeader}>
                       <div className={styles.logIndex}>#{index + 1}</div>
