@@ -6,6 +6,7 @@ export default function Users() {
   const [users, setUsers] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const [searchTerm, setSearchTerm] = useState('')
   const { user } = useAuth()
 
   useEffect(() => {
@@ -63,30 +64,37 @@ export default function Users() {
   }
 
   const deleteAllLogs = async () => {
-    if (!window.confirm('Are you sure you want to delete ALL feedback logs? This action cannot be undone!')) {
+    if (!window.confirm('Are you sure you want to delete ALL users? This action cannot be undone!')) {
       return
     }
     
     try {
-      const response = await fetch('http://localhost:8000/api/feedback-records')
-      if (response.ok) {
-        const data = await response.json()
-        // Delete each record
-        for (const record of data) {
-          await fetch(`http://localhost:8000/api/feedback-records/${record.id}`, {
-            method: 'DELETE'
-          })
-        }
-        setUsers([]) // Clear display after deletion
-      } else {
-        alert('Failed to fetch logs to delete')
-      }
+      const deletePromises = users.map(user => 
+        fetch(`http://localhost:8000/api/auth/users/${user._id}`, {
+          method: 'DELETE'
+        })
+      )
+      
+      await Promise.all(deletePromises)
+      setUsers([])
     } catch (err) {
-      alert('Error deleting logs')
+      alert('Error deleting users')
     }
   }
 
   const isAdmin = user && user.role === 'admin'
+
+  // Filter users based on search term
+  const filteredUsers = users.filter(user => {
+    if (!searchTerm) return true
+    
+    const searchLower = searchTerm.toLowerCase()
+    return (
+      user.email.toLowerCase().includes(searchLower) ||
+      (user.full_name && user.full_name.toLowerCase().includes(searchLower)) ||
+      (user.submission_id && user.submission_id.toLowerCase().includes(searchLower))
+    )
+  })
 
   if (loading) {
     return (
@@ -115,16 +123,14 @@ export default function Users() {
   return (
     <div className={styles.container}>
       <div className={styles.pageContent}>
-        <h1 className={styles.pageTitle}>Users
-          
-        </h1>
+        <h1 className={styles.pageTitle}>Users</h1>
         <p className={styles.pageDescription}>
           Manage user accounts and view system activity.
         </p>
 
         <div className={styles.logsContainer}>
             <div className={styles.logsHeader}>
-              <h2>Registered Users ({users.length})</h2>
+              <h2>Registered Users ({filteredUsers.length})</h2>
               <div className={styles.headerActions}>
                 {isAdmin && (
                   <button 
@@ -139,16 +145,29 @@ export default function Users() {
                 </button>
               </div>
             </div>
+
+            <div className={styles.searchContainer}>
+              <input
+                type="text"
+                placeholder="Search by email or name..."
+                className={styles.searchInput}
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+              <button className={styles.searchButton} onClick={() => setSearchTerm('')}>
+                Clear
+              </button>
+            </div>
             
-            {users.length === 0 ? (
+            {filteredUsers.length === 0 ? (
               <div className={styles.emptyState}>
                 <div className={styles.emptyIcon}>👥</div>
                 <h3>No users found</h3>
-                <p>No users have registered yet.</p>
+                <p>No users match your search criteria.</p>
               </div>
             ) : (
               <div className={styles.logsGrid}>
-                {users.map((user) => (
+                {filteredUsers.map((user) => (
                 <div key={user._id} className={styles.logCard}>
                   <div className={styles.userHeader}>
                     <h3 className={styles.logEmail}>{user.email}</h3>
