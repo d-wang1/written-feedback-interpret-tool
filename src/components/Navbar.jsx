@@ -17,7 +17,7 @@ export default function Navbar() {
   console.log('Navbar - user.email:', user?.email)
 
   const isActive = (path) => location.pathname === path
-  const isAdmin = user && user.email === 'admin@gmail.com'
+  const isAdmin = user && user.submission_id === 'ADMIN001'
 
   const handleLogout = () => {
     logout()
@@ -65,18 +65,22 @@ export default function Navbar() {
           >
             Contact
           </Link>
-          <Link 
-            to="/logs" 
-            className={`${styles.navLink} ${isActive('/logs') ? styles.activeLink : ''}`}
-          >
-            Logs
-          </Link>
-          <Link 
-            to="/users" 
-            className={`${styles.navLink} ${isActive('/users') ? styles.activeLink : ''}`}
-          >
-            Users
-          </Link>
+          {isAdmin && (
+            <Link 
+              to="/logs" 
+              className={`${styles.navLink} ${isActive('/logs') ? styles.activeLink : ''}`}
+            >
+              Logs
+            </Link>
+          )}
+          {isAdmin && (
+            <Link 
+              to="/users" 
+              className={`${styles.navLink} ${isActive('/users') ? styles.activeLink : ''}`}
+            >
+              Users
+            </Link>
+          )}
           <Link 
             to="/profile" 
             className={`${styles.navLink} ${isActive('/profile') ? styles.activeLink : ''}`}
@@ -122,8 +126,8 @@ export default function Navbar() {
           <Link to="/features" className={styles.mobileNavLink}>Features</Link>
           <Link to="/about" className={styles.mobileNavLink}>About</Link>
           <Link to="/contact" className={styles.mobileNavLink}>Contact</Link>
-          <Link to="/logs" className={styles.mobileNavLink}>Logs</Link>
-          <Link to="/users" className={styles.mobileNavLink}>Users</Link>
+          {isAdmin && <Link to="/logs" className={styles.mobileNavLink}>Logs</Link>}
+          {isAdmin && <Link to="/users" className={styles.mobileNavLink}>Users</Link>}
           <Link to="/profile" className={styles.mobileNavLink}>Profile</Link>
           {user ? (
             <>

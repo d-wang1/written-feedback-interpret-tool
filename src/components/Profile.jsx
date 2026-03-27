@@ -99,7 +99,7 @@ export default function Profile() {
 
         {feedbacks.length === 0 ? (
           <div className={styles.emptyState}>
-            <div className={styles.emptyIcon}>📝</div>
+            <div className={styles.emptyIcon}></div>
             <h3>No Feedback History</h3>
             <p>You haven't generated any feedback yet. Start by submitting some feedback on the home page!</p>
             <button 
