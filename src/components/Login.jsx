@@ -7,6 +7,7 @@ export default function Login() {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
+    submission_id: '',
     rememberMe: false
   })
   const [isLoading, setIsLoading] = useState(false)
@@ -34,6 +35,7 @@ export default function Login() {
         body: JSON.stringify({
           email: formData.email,
           password: formData.password,
+          submission_id: formData.submission_id,
           remember_me: formData.rememberMe
         })
       })
@@ -44,8 +46,9 @@ export default function Login() {
         // Use AuthContext login function to update state
         login({
           id: data.user_id,
-          email: formData.email,
-          role: data.role || 'user'
+          email: formData.email || formData.submission_id,
+          role: data.role || 'user',
+          submission_id: formData.submission_id
         }, data.access_token)
         
         // Redirect to dashboard or home
@@ -91,6 +94,22 @@ export default function Login() {
             {error && <div className={styles.errorMessage}>{error}</div>}
             
             <div className={styles.formGroup}>
+              <label className={styles.formLabel} htmlFor="submission_id">
+                Submission ID
+              </label>
+              <input
+                type="text"
+                id="submission_id"
+                name="submission_id"
+                className={styles.formInput}
+                placeholder="Enter your submission ID"
+                value={formData.submission_id}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div className={styles.formGroup}>
               <label className={styles.formLabel} htmlFor="email">
                 Email Address
               </label>
@@ -102,7 +121,6 @@ export default function Login() {
                 placeholder="Enter your email"
                 value={formData.email}
                 onChange={handleChange}
-                required
               />
             </div>
 
@@ -118,7 +136,6 @@ export default function Login() {
                 placeholder="Enter your password"
                 value={formData.password}
                 onChange={handleChange}
-                required
               />
             </div>
 

@@ -13,8 +13,11 @@ export default function Navbar() {
   console.log('Navbar - localStorage token:', localStorage.getItem('access_token'))
   console.log('Navbar - localStorage user_id:', localStorage.getItem('user_id'))
   console.log('Navbar - localStorage email:', localStorage.getItem('user_email'))
+  console.log('Navbar - user.submission_id:', user?.submission_id)
+  console.log('Navbar - user.email:', user?.email)
 
   const isActive = (path) => location.pathname === path
+  const isAdmin = user && user.email === 'admin@gmail.com'
 
   const handleLogout = () => {
     logout()
@@ -86,7 +89,7 @@ export default function Navbar() {
           {user ? (
             <>
               <span className={styles.userInfo}>
-                 {user.email}
+                {user.submission_id || user.email}
               </span>
               <button onClick={handleLogout} className={styles.logoutButton}>
                 Logout
@@ -125,7 +128,7 @@ export default function Navbar() {
           {user ? (
             <>
               <span className={styles.userInfo}>
-                 {user.email}
+                {user.submission_id || user.email}
               </span>
               <button onClick={handleLogout} className={styles.mobileLogoutButton}>
                 Logout

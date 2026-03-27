@@ -28,6 +28,15 @@ export default function Signup() {
     setError('')
     setIsLoading(true)
 
+    // Debug logs
+    console.log('=== SIGNUP DEBUG ===')
+    console.log('Submission ID:', formData.submission_id)
+    console.log('Email:', formData.email)
+    console.log('Password:', formData.password)
+    console.log('Remember Me:', formData.rememberMe)
+    console.log('Full formData:', formData)
+    console.log('==================')
+
     try {
       const response = await fetch('http://localhost:8000/api/auth/signup', {
         method: 'POST',
@@ -41,21 +50,21 @@ export default function Signup() {
         })
       })
 
-      console.log('Signup response:', response)
-      const data = await response.json()
-      console.log('Signup data:', data)
-      
-      // Use AuthContext login function to update state
+      // Read response text ONCE
+      const responseText = await response.text()
+      console.log('Signup response status:', response.status)
+      console.log('Signup response text:', responseText)
+
       if (response.ok) {
-        console.log('Calling login function with:', {
-          id: data.user_id,
-          email: formData.email
-        }, data.access_token)
+        const data = JSON.parse(responseText)
+        console.log('Signup data:', data)
         
+        // Use AuthContext login function to update state
         login({
           id: data.user_id,
-          email: formData.email,
-          role: data.role || 'user'
+          email: formData.email || formData.submission_id,
+          role: data.role || 'user',
+          submission_id: formData.submission_id
         }, data.access_token)
         
         console.log('Login function called, redirecting to home')
@@ -63,8 +72,12 @@ export default function Signup() {
         navigate('/')
       } else {
         console.log('Signup failed, response not ok')
-        const errorData = await response.json()
-        setError(errorData.detail || 'Signup failed. Please try again.')
+        try {
+          const errorData = JSON.parse(responseText)
+          setError(errorData.detail || 'Signup failed. Please try again.')
+        } catch (parseError) {
+          setError('Signup failed. Please try again.')
+        }
       }
     } catch (err) {
       console.log('Signup error:', err)
@@ -104,40 +117,8 @@ export default function Signup() {
             {error && <div className={styles.errorMessage}>{error}</div>}
             
             <div className={styles.formGroup}>
-              <label className={styles.formLabel} htmlFor="email">
-                Email Address
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                className={styles.formInput}
-                placeholder="Enter your email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-              />
-            </div>
-
-            <div className={styles.formGroup}>
-              <label className={styles.formLabel} htmlFor="password">
-                Password
-              </label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                className={styles.formInput}
-                placeholder="Create a password"
-                value={formData.password}
-                onChange={handleChange}
-                required
-              />
-            </div>
-
-            <div className={styles.formGroup}>
               <label className={styles.formLabel} htmlFor="submission_id">
-                Submission ID (Optional)
+                Submission ID *
               </label>
               <input
                 type="text"
@@ -146,6 +127,37 @@ export default function Signup() {
                 className={styles.formInput}
                 placeholder="Enter your submission ID"
                 value={formData.submission_id}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel} htmlFor="email">
+                Email Address (Optional)
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                className={styles.formInput}
+                placeholder="Enter your email (optional)"
+                value={formData.email}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel} htmlFor="password">
+                Password (Optional)
+              </label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                className={styles.formInput}
+                placeholder="Create a password (optional)"
+                value={formData.password}
                 onChange={handleChange}
               />
             </div>
