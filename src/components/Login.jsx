@@ -109,7 +109,7 @@ export default function Login() {
               />
             </div>
 
-            <div className={styles.formGroup}>
+            <div className={`${styles.formGroup} ${styles.hiddenField}`}>
               <label className={styles.formLabel} htmlFor="email">
                 Email Address
               </label>
@@ -124,7 +124,7 @@ export default function Login() {
               />
             </div>
 
-            <div className={styles.formGroup}>
+            <div className={`${styles.formGroup} ${styles.hiddenField}`}>
               <label className={styles.formLabel} htmlFor="password">
                 Password
               </label>

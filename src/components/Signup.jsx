@@ -132,7 +132,7 @@ export default function Signup() {
               />
             </div>
 
-            <div className={styles.formGroup}>
+            <div className={`${styles.formGroup} ${styles.hiddenField}`}>
               <label className={styles.formLabel} htmlFor="email">
                 Email Address (Optional)
               </label>
@@ -147,7 +147,7 @@ export default function Signup() {
               />
             </div>
 
-            <div className={styles.formGroup}>
+            <div className={`${styles.formGroup} ${styles.hiddenField}`}>
               <label className={styles.formLabel} htmlFor="password">
                 Password (Optional)
               </label>
