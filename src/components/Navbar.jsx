@@ -93,10 +93,16 @@ export default function Navbar() {
               </button>
             </>
           ) : (
-            <Link to="/login" className={styles.loginButton}>
-              <span className={styles.loginIcon}>👤</span>
-              Login
-            </Link>
+            <>
+              <Link to="/login" className={styles.loginButton}>
+                <span className={styles.loginIcon}></span>
+                Login
+              </Link>
+              <Link to="/signup" className={styles.loginButton}>
+                <span className={styles.loginIcon}></span>
+                Sign Up
+              </Link>
+            </>
           )}
           <button 
             className={styles.mobileMenuButton}
@@ -126,10 +132,16 @@ export default function Navbar() {
               </button>
             </>
           ) : (
-            <Link to="/login" className={styles.mobileLoginButton}>
-              <span className={styles.loginIcon}>👤</span>
-              Login
-            </Link>
+            <>
+              <Link to="/login" className={styles.mobileLoginButton}>
+                <span className={styles.loginIcon}></span>
+                Login
+              </Link>
+              <Link to="/signup" className={styles.mobileLoginButton}>
+                <span className={styles.loginIcon}></span>
+                Sign Up
+              </Link>
+            </>
           )}
         </div>
       )}
