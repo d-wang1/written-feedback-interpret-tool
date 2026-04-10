@@ -7,6 +7,13 @@ from datetime import datetime, timedelta
 from typing import Optional
 from motor.motor_asyncio import AsyncIOMotorClient
 from bson import ObjectId
+import time
+from collections import defaultdict
+
+# Rate limiting storage (in-memory for simplicity)
+user_requests = defaultdict(list)
+RATE_LIMIT = 20  # 20 requests per user per hour
+RATE_WINDOW = 3600  # 1 hour window in seconds
 
 router = APIRouter(prefix="/api/auth", tags=["authentication"])
 security = HTTPBearer()
@@ -18,6 +25,39 @@ async def get_database():
     # Import database from the main app module
     from app.mongodb import database
     return database
+
+def check_rate_limit(user_identifier: str):
+    """Check if user has exceeded rate limit"""
+    current_time = time.time()
+    
+    # Clean old requests (outside the window)
+    user_requests[user_identifier] = [
+        req_time for req_time in user_requests[user_identifier]
+        if current_time - req_time < RATE_WINDOW
+    ]
+    
+    # Check if user has exceeded the limit
+    if len(user_requests[user_identifier]) >= RATE_LIMIT:
+        return False
+    
+    # Add current request
+    user_requests[user_identifier].append(current_time)
+    return True
+
+def get_user_identifier(request):
+    """Extract user identifier from request"""
+    # Try to get user from JWT token first
+    auth_header = request.headers.get("authorization")
+    if auth_header and auth_header.startswith("Bearer "):
+        try:
+            token = auth_header.split(" ")[1]
+            decoded = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+            return decoded.get("sub", "anonymous")
+        except:
+            pass
+    
+    # Fallback to IP address
+    return request.client.host or "unknown"
 
 class UserLogin(BaseModel):
     email: Optional[str] = None
@@ -40,11 +80,20 @@ class Token(BaseModel):
     role: Optional[str] = "user"
 
 @router.post("/signup", response_model=Token)
-async def signup(user_data: UserSignup):
+async def signup(user_data: UserSignup, request):
     db = await get_database()
+    
+    # Rate limiting check
+    user_id = get_user_identifier(request)
+    if not check_rate_limit(user_id):
+        raise HTTPException(
+            status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+            detail=f"Rate limit exceeded. Maximum {RATE_LIMIT} requests per {RATE_WINDOW//3600} hours."
+        )
     
     # Debug logs
     print(f"=== BACKEND SIGNUP DEBUG ===")
+    print(f"User ID: {user_id}")
     print(f"Email: '{user_data.email}'")
     print(f"Password: '{user_data.password}'")
     print(f"Submission ID: '{user_data.submission_id}'")
@@ -108,8 +157,16 @@ async def signup(user_data: UserSignup):
     return Token(access_token=access_token, token_type="bearer", user_id=user_id, role=user_data.role or "user")
 
 @router.post("/login", response_model=Token)
-async def login(user_data: UserLogin):
+async def login(user_data: UserLogin, request):
     db = await get_database()
+    
+    # Rate limiting check
+    user_id = get_user_identifier(request)
+    if not check_rate_limit(user_id):
+        raise HTTPException(
+            status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+            detail=f"Rate limit exceeded. Maximum {RATE_LIMIT} requests per {RATE_WINDOW//3600} hours."
+        )
     
     # Check if user exists by submission_id or email
     user = None
