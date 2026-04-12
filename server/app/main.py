@@ -1,4 +1,5 @@
 import os
+import re
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import Optional
@@ -225,7 +226,8 @@ async def interpret(req: dict):
             stop=stop,
         )
 
-        output = resp.choices[0].message.content or ""
+        raw_output = resp.choices[0].message.content or ""
+        output = re.sub(r"<think>[\s\S]*?</think>", "", raw_output).strip()
         
         # Calculate lengths
         input_length = len(text)

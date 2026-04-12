@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, Any, List
@@ -38,6 +39,11 @@ def load_text(path: Path) -> str:
 
 def render_prompt(template: str, inp: str) -> str:
     return template.format(input=inp)
+
+
+def strip_thinking(text: str) -> str:
+    """Remove <think>...</think> blocks that some models emit."""
+    return re.sub(r"<think>[\s\S]*?</think>", "", text).strip()
 
 
 def now_stamp() -> str:
@@ -111,6 +117,7 @@ def main():
             # Generate
             try:
                 out = provider.generate(model=model, prompt=prompt, params=params)
+                out = strip_thinking(out)
             except Exception as e:
                 out = ""
                 err = repr(e)
