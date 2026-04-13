@@ -89,3 +89,9 @@
   font-size: 13px;
   opacity: 0.75;
 }
+
+.error {
+  margin: 12px 0 0 0;
+  font-size: 13px;
+  color: #d32f2f;
+}

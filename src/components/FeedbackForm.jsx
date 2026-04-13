@@ -11,6 +11,7 @@ export default function FeedbackForm({
   onGenerate,
   onClear,
   canGenerate,
+  optionError,
   isLoading
 }) {
   function handleOptionChange(e) {
@@ -86,6 +87,7 @@ export default function FeedbackForm({
       </div>
 
       {!canGenerate && <p className={styles.hint}>Tip: paste some feedback text to enable Generate.</p>}
+      {optionError && <p className={styles.error}>{optionError}</p>}
     </section>
   )
 }

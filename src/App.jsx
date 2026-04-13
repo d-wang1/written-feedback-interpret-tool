@@ -40,11 +40,19 @@ function HomePage() {
       .catch(err => console.error('Failed to load models:', err))
   }, [])
 
+  const [optionError, setOptionError] = useState('')
+  const hasOption = options.simplify || options.soften || options.caseSupport
   const canGenerate = useMemo(() => inputText.trim().length > 0, [inputText])
 
   async function handleGenerate() {
+    if (!hasOption) {
+      setOptionError('Please select at least one option (Simplify, Soften, or Case support).')
+      return
+    }
+
+    setOptionError('')
     setIsLoading(true)
-    
+
     const userId = user?.id || null  // Use user from the top level
     console.log("[DEBUG] Model sent to API:", selectedModel)
 
@@ -97,6 +105,7 @@ function HomePage() {
             onGenerate={handleGenerate}
             onClear={handleClear}
             canGenerate={canGenerate}
+            optionError={optionError}
             isLoading={isLoading}
           />
 

@@ -33,3 +33,4 @@ pnpm-debug.log
 venv/
 .venv/
 server/app/__pycache__/
+.claude/
