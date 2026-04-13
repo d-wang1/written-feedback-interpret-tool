@@ -101,7 +101,7 @@ export default function Logs() {
     const selected = []
     if (options === "simplify") selected.push('Simplify')
     if (options === "soften") selected.push('Soften')
-    if (options === "caseSupport") selected.push('Case Support')
+    if (options === "actionable") selected.push('Actionable')
     return selected.length > 0 ? selected.join(', ') : 'None'
   }
 

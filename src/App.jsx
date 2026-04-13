@@ -25,7 +25,7 @@ function HomePage() {
   const [options, setOptions] = useState({
     simplify: false,
     soften: false,
-    caseSupport: false,
+    actionable: false,
   })
 
   useEffect(() => {
@@ -41,12 +41,12 @@ function HomePage() {
   }, [])
 
   const [optionError, setOptionError] = useState('')
-  const hasOption = options.simplify || options.soften || options.caseSupport
+  const hasOption = options.simplify || options.soften || options.actionable
   const canGenerate = useMemo(() => inputText.trim().length > 0, [inputText])
 
   async function handleGenerate() {
     if (!hasOption) {
-      setOptionError('Please select at least one option (Simplify, Soften, or Case support).')
+      setOptionError('Please select at least one option (Simplify, Soften, or Make actionable).')
       return
     }
 

@@ -246,8 +246,8 @@ async def interpret(req: dict):
         if options:
             if options.get("simplify"):
                 methods.append("simplify")
-            if options.get("caseSupport"):
-                methods.append("caseSupport")
+            if options.get("actionable"):
+                methods.append("actionable")
             if options.get("soften"):
                 methods.append("soften")
             

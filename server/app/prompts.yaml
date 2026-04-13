@@ -18,8 +18,8 @@ default:
     soften: |
       Soften the tone to be constructive and supportive. Prefer positive phrasing and avoid harsh wording.
 
-    caseSupport: |
-      Add brief case support: 2–4 bullet points suggesting concrete examples or evidence.
+    actionable: |
+      Make the feedback actionable: append 2–4 bullet points proposing concrete next steps the recipient can take.
 
   format:
     bullet_prefix: "• "
@@ -45,8 +45,8 @@ concise:
     soften: |
       Soften the tone to be constructive and supportive. Avoid harsh wording.
 
-    caseSupport: |
-      Add brief case support: 2–4 bullet points suggesting concrete examples or evidence.
+    actionable: |
+      Make the feedback actionable: append 2–4 bullet points proposing concrete next steps the recipient can take.
 
   format:
     bullet_prefix: "• "

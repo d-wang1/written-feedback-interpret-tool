@@ -53,11 +53,11 @@ export default function FeedbackForm({
         <label className={styles.checkbox}>
           <input
             type="checkbox"
-            name="caseSupport"
-            checked={options.caseSupport}
+            name="actionable"
+            checked={options.actionable}
             onChange={handleOptionChange}
           />
-          Add case support
+          Make actionable
         </label>
       </div>
 

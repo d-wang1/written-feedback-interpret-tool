@@ -59,8 +59,8 @@ def build_user_prompt(text: str, options: dict, profile_cfg: dict) -> str:
         parts.append((instr_cfg.get("simplify") or "").strip())
     if options.get("soften"):
         parts.append((instr_cfg.get("soften") or "").strip())
-    if options.get("caseSupport"):
-        parts.append((instr_cfg.get("caseSupport") or "").strip())
+    if options.get("actionable"):
+        parts.append((instr_cfg.get("actionable") or "").strip())
 
     # If no options selected, still do something deterministic
     if len(parts) == 0 or (len(parts) == 1 and parts[0] == base):
@@ -68,11 +68,11 @@ def build_user_prompt(text: str, options: dict, profile_cfg: dict) -> str:
 
     instruction_block = "\n\n".join([p for p in parts if p])
 
-    # If caseSupport, tell it the bullet character we want (configurable)
+    # If actionable, tell it the bullet character we want (configurable)
     fmt = profile_cfg.get("format") or {}
     bullet_prefix = (fmt.get("bullet_prefix") or "• ").strip()
 
-    if options.get("caseSupport"):
+    if options.get("actionable"):
         instruction_block += f"\n\nUse '{bullet_prefix}' to start each bullet."
 
     return f"{instruction_block}\n\nFEEDBACK:\n{text}".strip()
