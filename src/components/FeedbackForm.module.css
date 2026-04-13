@@ -40,6 +40,22 @@
   gap: 10px;
 }
 
+.modelSelect {
+  margin-top: 14px;
+}
+
+.select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #d7d7d7;
+  font-size: 14px;
+  color: #111111;
+  background: #ffffff;
+  cursor: pointer;
+  appearance: auto;
+}
+
 .actions {
   display: flex;
   gap: 10px;

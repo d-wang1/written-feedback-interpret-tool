@@ -5,6 +5,9 @@ export default function FeedbackForm({
   onInputChange,
   options,
   onOptionsChange,
+  availableModels,
+  selectedModel,
+  onModelChange,
   onGenerate,
   onClear,
   canGenerate,
@@ -55,6 +58,22 @@ export default function FeedbackForm({
           />
           Add case support
         </label>
+      </div>
+
+      <div className={styles.modelSelect}>
+        <label className={styles.label} htmlFor="model-select">
+          Model
+        </label>
+        <select
+          id="model-select"
+          className={styles.select}
+          value={selectedModel}
+          onChange={e => onModelChange(e.target.value)}
+        >
+          {availableModels.map(m => (
+            <option key={m} value={m}>{m}</option>
+          ))}
+        </select>
       </div>
 
       <div className={styles.actions}>

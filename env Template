@@ -1,0 +1,10 @@
+# SAMPLE ENV FILE. Rename to `.env` and modify
+GROQ_API_KEY=gsk_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+PROMPT_PROFILE=default
+<!-- MODEL_CONFIG_FILE= -->
+<!-- PROMPT_FILE= -->
+MODEL_PROFILE=default
+
+
+
+MONGO_URL=mongodb://mongo:27017/feedback_db

@@ -20,6 +20,8 @@ function HomePage() {
   const [inputText, setInputText] = useState('')
   const [outputText, setOutputText] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [availableModels, setAvailableModels] = useState([])
+  const [selectedModel, setSelectedModel] = useState('')
   const [options, setOptions] = useState({
     simplify: false,
     soften: false,
@@ -28,6 +30,14 @@ function HomePage() {
 
   useEffect(() => {
     document.title = 'EchoAI - Written Feedback Interpretation Tool'
+    fetch('/api/models')
+      .then(res => res.json())
+      .then(data => {
+        const models = data.models || []
+        setAvailableModels(models)
+        if (models.length > 0) setSelectedModel(models[0])
+      })
+      .catch(err => console.error('Failed to load models:', err))
   }, [])
 
   const canGenerate = useMemo(() => inputText.trim().length > 0, [inputText])
@@ -36,13 +46,15 @@ function HomePage() {
     setIsLoading(true)
     
     const userId = user?.id || null  // Use user from the top level
-    
+    console.log("[DEBUG] Model sent to API:", selectedModel)
+
     const res = await fetch("/api/interpret", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         text: inputText,
         options,
+        model: selectedModel,
         user_info: user ? {
           id: user.id,
           email: user.email
@@ -79,6 +91,9 @@ function HomePage() {
             onInputChange={setInputText}
             options={options}
             onOptionsChange={setOptions}
+            availableModels={availableModels}
+            selectedModel={selectedModel}
+            onModelChange={setSelectedModel}
             onGenerate={handleGenerate}
             onClear={handleClear}
             canGenerate={canGenerate}

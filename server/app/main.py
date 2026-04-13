@@ -85,6 +85,11 @@ class FeedbackRecord(BaseModel):
 def health():
     return {"ok": True}
 
+@app.get("/api/models")
+def get_models():
+    cfg = model_config_store.load()
+    return {"models": cfg.get("available_models", [])}
+
 # @app.get("/api/db-status")
 # async def db_status():
 #     """Check MongoDB connection"""
@@ -207,12 +212,16 @@ async def interpret(req: dict):
 
         model_cfg = model_config_store.load()
         generation = model_cfg.get("generation", {})
+        available = model_cfg.get("available_models", [])
 
-        model_name = model_cfg.get("model")
+        model_name = req.get("model") or (available[0] if available else None)
+        if not model_name:
+            raise HTTPException(status_code=400, detail="No model specified and none configured")
+
         temperature = generation.get("temperature", 0.2)
         top_p = generation.get("top_p", 1.0)
         max_tokens = generation.get("max_tokens", 512)
-        stop = model_cfg.get("stop_sequences") or None
+        stop = generation.get("stop_sequences") or None
 
         resp = get_client().chat.completions.create(
             model=model_name,

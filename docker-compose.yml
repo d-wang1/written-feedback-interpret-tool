@@ -21,6 +21,9 @@ services:
       - "8000:8000"
     env_file:
       - .env
+    volumes:
+      - ./server/app:/app/app
+      - ./server/auth.py:/app/auth.py
 
   mongo:
     image: mongo:7
