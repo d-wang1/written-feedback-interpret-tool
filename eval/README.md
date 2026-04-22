@@ -1,10 +1,3 @@
-Perfect — since you're using **Groq only (for now)** and **Python 3.11.9**, I'll tailor this specifically to your current setup and make it clean, professional, and GitHub-ready.
-
-You can copy-paste the following directly into:
-
-```
-eval/README.md
-```
 
 ---
 
