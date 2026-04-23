@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, status, Depends
+from fastapi import APIRouter, HTTPException, status, Depends, Request
 from fastapi.security import HTTPBearer
 from pydantic import BaseModel
 import bcrypt
@@ -80,7 +80,7 @@ class Token(BaseModel):
     role: Optional[str] = "user"
 
 @router.post("/signup", response_model=Token)
-async def signup(user_data: UserSignup, request):
+async def signup(user_data: UserSignup, request: Request):
     db = await get_database()
     
     # Rate limiting check
@@ -157,7 +157,7 @@ async def signup(user_data: UserSignup, request):
     return Token(access_token=access_token, token_type="bearer", user_id=user_id, role=user_data.role or "user")
 
 @router.post("/login", response_model=Token)
-async def login(user_data: UserLogin, request):
+async def login(user_data: UserLogin, request: Request):
     db = await get_database()
     
     # Rate limiting check
