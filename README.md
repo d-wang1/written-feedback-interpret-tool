@@ -20,13 +20,10 @@ The LLM provider can be easily exchanged in `server/app/main.py` based on need a
    2. Verify server health via http://localhost:8000/api/health
 
 
-# *(Dev)* TODOs:
-- Implement Figma template (in addition?) as a separate page
-- User profile login system
-  - DB to store user info
-- Add repeat-click limit (per time frame) for website to avoid exceeding free quota
-- Add configurable model choice
-- Implement prompt evaluation / testing pipeline for prompt engineering
+# Key Files:
+- __API__: The `server/` directory contains all files pertaining to the API call to the LLM. Specifically, use `server/app/model_config.yaml` for model configurations and `server/app/prompts.yaml` for prompt updates. 
+- __Model Evaluation__: The `eval/` directory contains the evaluation pipeline. Reference `eval/README.md` for details about the pipeline. Specifically, just follow the instructions in "**How to run the evaluation**" section. Note that this will need a separate venv (not based on the same docker image as the main website). The requirements are found in `eval/requirements.txt`.
+
 
 # Common Issues:
 1. Quota Exceeded
