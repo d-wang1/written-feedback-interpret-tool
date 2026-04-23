@@ -24,8 +24,8 @@ export default function Features() {
           
           <div className={styles.featureCard}>
             <div className={styles.featureIcon}></div>
-            <h3>Case-Based Support</h3>
-            <p>Add relevant examples and case studies to clarify feedback.</p>
+            <h3>Make Actionable</h3>
+            <p>Transform feedback into specific, actionable steps you can take to improve.</p>
           </div>
         </div>
       </div>

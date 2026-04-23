@@ -13,7 +13,7 @@ export default function About() {
           <h2>Our Mission</h2>
           <p>
             EchoAI helps turn confusing academic feedback into plain English explanations students can
-             actually use. We use AI to break down written comments into clear, practical guidance so you
+             actually use. We use multiple AI models to break down written comments into clear, practical guidance so you
               know what to fix, why it matters, and how to improve.
           </p>
         </div>
